@@ -1,12 +1,14 @@
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const Button_Green = props => {
   return (
-    <Pressable style={estilos.button} onPress={props.onPress}>
+    <TouchableOpacity style={estilos.button} onPress={props.onPress}>
       <Text style={estilos.txt}>{props.txtEntrar}</Text>
       <Text style={estilos.txt}>{props.txtConta}</Text>
       <Text style={estilos.txt}>{props.txtEsqueciSenha}</Text>
-    </Pressable>
+      <Text style={estilos.txt}>{props.txtCadastrar}</Text>
+      
+    </TouchableOpacity>
   );
 };
 
