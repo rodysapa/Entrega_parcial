@@ -8,11 +8,11 @@ const CreateAcount = (props) => {
   return(
     <SafeAreaView style={estilos.container}>
       <ScrollView>
-    <Header txtHeader="Recuperação de senha" onPress={() => console.log('alo1')}/>
+    <Header txtHeader="Recuperação de senha" onPress={() => props.navigation.pop()}/>
     <View style={estilos.viewMother}>
     <View style={estilos.viewMiddle}>
       <LabeledTextInput txtlabel='E-mail' onChangeText={props}/>
-      <Button_Green  txtEntrar="RECUPERAR" onPress={() => console.log('alo2')}/>
+      <Button_Green  txtEntrar="RECUPERAR" onPress={() => props.navigation.pop()}/>
       </View> 
     </View>
     </ScrollView>

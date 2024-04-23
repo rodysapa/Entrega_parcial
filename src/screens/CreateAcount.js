@@ -7,7 +7,7 @@ const CreateAcount = (props) => {
   return(
     <SafeAreaView style={estilos.container}>
       <ScrollView>
-    <Header txtHeader="Nova Conta" onPress={() => console.log('alo1')}/>
+    <Header txtHeader="Nova Conta" onPress={() => props.navigation.pop()}/>
     <View style={estilos.viewMother}>
     <View style={estilos.viewInput}>
       <LabeledTextInput txtlabel='E-mail' onChangeText={props}/>
@@ -15,7 +15,7 @@ const CreateAcount = (props) => {
       <LabeledTextInput txtlabel='Repetir senha' value={props} onChangeText={props}/>
       </View>
       <View style={estilos.button}>
-        <Button_Green  txtEntrar="RECUPERAR" onPress={() => console.log('alo2')}/>
+        <Button_Green  txtEntrar="RECUPERAR" onPress={() => props.navigation.pop()}/>
       </View>
     </View>
     </ScrollView>
