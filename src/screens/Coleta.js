@@ -1,7 +1,25 @@
-import {StyleSheet, View, Text} from 'react-native'
+import {StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { useState } from 'react'
+
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
+const FeedbackButton = (props) => {
+    return (
+        <TouchableOpacity style={styles.button} onPress={props.onPress}>
+            <Icon name={props.icon} color={props.color} size={50} />
+            <Text style={styles.buttonText}>{props.text}</Text>
+        </TouchableOpacity>
+    )
+}
+
 const Coleta = () => {
+
+    const [feedbackLevel, setFeedbackLevel] = useState(0)
+
+    const collectFeedback = (level) => {
+        setFeedbackLevel(level)
+        // Navegar para a próxima tela
+    }
 
     return (
         <View style={styles.container}>
@@ -9,26 +27,11 @@ const Coleta = () => {
                 <Text style={styles.text}>O que você achou do Carnaval 2024?</Text>
             </View>
             <View style={styles.buttonContainer}>
-                <View style={styles.button}>
-                    <Icon name='face-frown' color='#d71616' size={50} />
-                    <Text style={styles.buttonText}>Péssimo</Text>
-                </View>
-                <View style={styles.button}>
-                    <Icon name='face-frown-open' color='#ff360a' size={50} />
-                    <Text style={styles.buttonText}>Ruim</Text>
-                </View>
-                <View style={styles.button}>
-                    <Icon name='face-meh' color='#ffc631' size={50} />
-                    <Text style={styles.buttonText}>Neutro</Text>
-                </View>
-                <View style={styles.button}>
-                    <Icon name='face-grin-wide' color='#37bd6d' size={50} />
-                    <Text style={styles.buttonText}>Bom</Text>
-                </View>
-                <View style={styles.button}>
-                    <Icon name='face-grin-stars' color='#25bc22' size={50} />
-                    <Text style={styles.buttonText}>Excelente</Text>
-                </View>
+                <FeedbackButton text='Péssimo' icon='face-frown' color='#d71616' onPress={() => collectFeedback(0)}/>
+                <FeedbackButton text='Ruim' icon='face-frown-open' color='#ff360a' onPress={() => collectFeedback(1)}/>
+                <FeedbackButton text='Neutro' icon='face-meh' color='#ffc631' onPress={() => collectFeedback(2)}/>
+                <FeedbackButton text='Bom' icon='face-grin-wide' color='#37bd6d' onPress={() => collectFeedback(3)}/>
+                <FeedbackButton text='Excelente' icon='face-grin-stars' color='#25bc22' onPress={() => collectFeedback(4)}/>
             </View>            
         </View>
     )
