@@ -1,13 +1,11 @@
 import { StyleSheet, View, Image } from 'react-native'
 import HeaderNavigation from '../components/HeaderNavigation';
 
-
 // https://files.catbox.moe/3torkn.png
 
 const Relatorio = () => {
     return (
         <View style={styles.container}>
-            <HeaderNavigation title="Relatório" />
             <Image style={styles.fakeReport} source={require('../../assets/images/fakereport.png')}/>
         </View>
     )
