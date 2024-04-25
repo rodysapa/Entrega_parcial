@@ -12,17 +12,23 @@ const FeedbackButton = (props) => {
     )
 }
 
-const Coleta = () => {
+const Coleta = (props) => {
 
     const [feedbackLevel, setFeedbackLevel] = useState(0)
 
     const collectFeedback = (level) => {
         setFeedbackLevel(level)
-        // Navegar para a próxima tela
+        props.navigation.navigate('AgradecimentoParticipacao')
+    }
+
+    const gotoBackstage = () => {
+        // Navega para a tela de configuração da pesquisa
+        props.navigation.navigate('AcoesPesquisa')
     }
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={styles.invisibleButton} onPress={gotoBackstage}></TouchableOpacity>
             <View style={styles.textContainer}>
                 <Text style={styles.text}>O que você achou do Carnaval 2024?</Text>
             </View>
@@ -58,6 +64,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 30,
         fontFamily: 'AveriaLibre-Regular',
+    },
+    invisibleButton: {
+        padding: 20,
+        alignSelf: 'flex-end',
+        backgroundColor: 'red',        
     },
     button: {
         justifyContent: 'center',
