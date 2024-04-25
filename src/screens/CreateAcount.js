@@ -1,28 +1,38 @@
-import {View, StyleSheet, SafeAreaView, ScrollView} from "react-native"
-import Header from "../components/Header";
-import LabeledTextInput from "../components/LabeledTextInput";
-import Button_Green from "../components/Button_Green";
+import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import Header from '../components/Header';
+import LabeledTextInput from '../components/LabeledTextInput';
+import Button_Green from '../components/Button_Green';
 
-const CreateAcount = (props) => {
-  return(
+const CreateAcount = props => {
+  return (
     <SafeAreaView style={estilos.container}>
       <ScrollView>
-    <Header txtHeader="Nova Conta" onPress={() => props.navigation.pop()}/>
-    <View style={estilos.viewMother}>
-    <View style={estilos.viewInput}>
-      <LabeledTextInput txtlabel='E-mail' onChangeText={props}/>
-      <LabeledTextInput txtlabel='Senha' value={props} onChangeText={props}/>
-      <LabeledTextInput txtlabel='Repetir senha' value={props} onChangeText={props}/>
-      </View>
-      <View style={estilos.button}>
-        <Button_Green  txtEntrar="RECUPERAR" onPress={() => props.navigation.pop()}/>
-      </View>
-    </View>
-    </ScrollView>
+        <Header txtHeader="Nova Conta" onPress={() => props.navigation.pop()} />
+        <View style={estilos.viewMother}>
+          <View style={estilos.viewInput}>
+            <LabeledTextInput txtlabel="E-mail" onChangeText={props} />
+            <LabeledTextInput
+              txtlabel="Senha"
+              value={props}
+              onChangeText={props}
+            />
+            <LabeledTextInput
+              txtlabel="Repetir senha"
+              value={props}
+              onChangeText={props}
+            />
+          </View>
+          <View style={estilos.button}>
+            <Button_Green
+              txtEntrar="RECUPERAR"
+              onPress={() => props.navigation.pop()}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
-    
-  )
-}
+  );
+};
 
 const estilos = StyleSheet.create({
   container: {
@@ -42,8 +52,8 @@ const estilos = StyleSheet.create({
   },
   button: {
     flex: 0.25,
-    paddingTop: '10%'
+    paddingTop: '10%',
   },
-})
+});
 
 export default CreateAcount;
