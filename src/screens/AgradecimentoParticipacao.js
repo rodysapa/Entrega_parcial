@@ -2,7 +2,16 @@
 3+69  
 import { View, Text, StyleSheet } from 'react-native'  
 
-const AgradecimentoParticipacao = () => {
+import { useEffect } from 'react'
+
+const AgradecimentoParticipacao = (props) => {
+    
+    useEffect(() => {
+        setTimeout(() => {
+            props.navigation.pop()
+        }, 3000)
+    }, [])
+    
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Obrigado por participar da pesquisa!</Text>

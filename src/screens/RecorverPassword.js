@@ -1,25 +1,41 @@
-import {View, StyleSheet, SafeAreaView, ScrollView} from "react-native"
-import Header from "../components/Header";
-import LabeledTextInput from "../components/LabeledTextInput";
-import Button_Green from "../components/Button_Green";
+import {View, StyleSheet, SafeAreaView, ScrollView, Text} from 'react-native';
+import {useState, useEffect} from 'react';
+import Header from '../components/Header';
+import LabeledTextInput from '../components/LabeledTextInput';
+import Button_Green from '../components/Button_Green';
 
+const CreateAcount = props => {
+  const [email, setEmail] = useState();
+  const [emailValid, setEmailValid] = useState();
 
-const CreateAcount = (props) => {
-  return(
+  useEffect(() => {
+    email && email.trim() ? setEmailValid(false) : setEmailValid(true);
+  }, [email]);
+  return (
     <SafeAreaView style={estilos.container}>
       <ScrollView>
-    <Header txtHeader="Recuperação de senha" onPress={() => props.navigation.pop()}/>
-    <View style={estilos.viewMother}>
-    <View style={estilos.viewMiddle}>
-      <LabeledTextInput txtlabel='E-mail' onChangeText={props}/>
-      <Button_Green  txtEntrar="RECUPERAR" onPress={() => props.navigation.pop()}/>
-      </View> 
-    </View>
-    </ScrollView>
+        <View style={estilos.viewMother}>
+          <View style={estilos.viewMiddle}>
+            <View>
+              <LabeledTextInput
+                txtlabel="E-mail"
+                label={email}
+                setLabel={setEmail}
+              />
+              {emailValid && (
+                <Text style={estilos.txtWarning}>Email Inválido</Text>
+              )}
+            </View>
+            <Button_Green
+              txtEntrar="RECUPERAR"
+              onPress={() => props.navigation.pop()}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
-    
-  )
-}
+  );
+};
 
 const estilos = StyleSheet.create({
   container: {
@@ -34,6 +50,9 @@ const estilos = StyleSheet.create({
   viewMiddle: {
     gap: 80,
   },
-})
+  txtWarning: {
+    color: 'red',
+  },
+});
 
 export default CreateAcount;

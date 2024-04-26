@@ -1,11 +1,18 @@
-import {StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView} from 'react-native';
-import {useState, useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
+import {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Button_Green from './src/components/Button_Green';
 import Button_Blue from './src/components/Button_Blue';
 import Button_Gray from './src/components/Button_Gray';
 
-const App = (props) => {
+const App = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailValid, setEmailValid] = useState('');
@@ -36,49 +43,46 @@ const App = (props) => {
   return (
     <SafeAreaView style={estilos.container}>
       <ScrollView>
-    <View style={estilos.main_view}>
-      <View style={estilos.view_title}>
-        <Text style={estilos.txtTitle}>Satisfying.you</Text>
-        <Icon name="face-smile" size={50} color={'#FFFFFF'} />
-      </View>
-      <View style={estilos.viewInput}>
-        <Text style={estilos.txtInput}>E-mail</Text>
-        <TextInput placeholder='XXXXXX@XXXX.com' placeholderTextColor={'rgba(63, 146, 197, 1)'}
-          id="txtEmail"
-          style={estilos.txtEmail}
-          value={email}
-          onChangeText={setEmail}
-        />
-        {emailValid && (<Text style={estilos.txtErro}>Email inválido ou não preenchido
-        </Text>)}
-        <Text style={estilos.txtInput}>Senha</Text>
-        <TextInput placeholder='**************' placeholderTextColor={'rgba(63, 146, 197, 1)'}
-          secureTextEntry={true}
-          id="txtSenha"
-          style={estilos.txtSenha}
-          value={password}
-          onChangeText={setPassword}
-        />
-        {passwordValid && (<Text style={estilos.txtErro}>Senha inválida
-        </Text>)}
-      </View>
+        <View style={estilos.main_view}>
+          <View style={estilos.view_title}>
+            <Text style={estilos.txtTitle}>Satisfying.you</Text>
+            <Icon name="face-smile" size={50} color={'#FFFFFF'} />
+          </View>
+          <View style={estilos.viewInput}>
+            <Text style={estilos.txtInput}>E-mail</Text>
+            <TextInput
+              id="txtEmail"
+              style={estilos.txtEmail}
+              value={email}
+              onChangeText={checkEmail => validateEmail(checkEmail)}
+            />
+            <Text style={estilos.txtInput}>Senha</Text>
+            <TextInput
+              secureTextEntry={true}
+              id="txtSenha"
+              style={estilos.txtSenha}
+              value={password}
+              onChangeText={checkSenha => validateSenha(checkSenha)}
+            />
+            <Text style={estilos.txtErro}>{message}</Text>
+          </View>
 
-      <View style={estilos.viewButton}>
-        <Button_Green txtEntrar="Entrar" onPress={() => handleNavigate('Home')} />
-      </View>
+          <View style={estilos.viewButton}>
+            <Button_Green txtEntrar="Entrar" onPress={handleLogin} />
+          </View>
 
-      <View style={estilos.viewBottom}>
-        <Button_Blue
-          txtConta="Criar minha conta"
-          onPress={() => handleNavigate('NovaConta')}
-        />
-        <Button_Gray
-          txtEsqueciSenha="Esqueci minha senha"
-          onPress={() => handleNavigate('RecuperarSenha')}
-        />
-      </View>
-    </View>
-    </ScrollView>
+          <View style={estilos.viewBottom}>
+            <Button_Blue
+              txtConta="Criar minha conta"
+              onPress={() => props.navigation.navigate('Nova Conta')}
+            />
+            <Button_Gray
+              txtEsqueciSenha="Esqueci minha senha"
+              onPress={() => props.navigation.navigate('Recuperar Senha')}
+            />
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )};
 };
@@ -99,21 +103,21 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     flex: 20,
-    paddingBottom: '3.5%'
+    paddingBottom: '3.5%',
   },
   viewInput: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     flex: 35,
-    paddingBottom: '5%'
+    paddingBottom: '5%',
   },
   viewButton: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
     flex: 15,
-    paddingBottom:'10%',
+    paddingBottom: '10%',
   },
   txtTitle: {
     color: 'white',

@@ -7,7 +7,6 @@ const Button_Green = props => {
       <Text style={estilos.txt}>{props.txtConta}</Text>
       <Text style={estilos.txt}>{props.txtEsqueciSenha}</Text>
       <Text style={estilos.txt}>{props.txtCadastrar}</Text>
-      
     </TouchableOpacity>
   );
 };
@@ -15,17 +14,16 @@ const Button_Green = props => {
 const estilos = StyleSheet.create({
   button: {
     backgroundColor: 'rgba(55, 189, 109, 1)',
-    height: 50,
+    height: 32,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   txt: {
     color: 'white',
     fontFamily: 'AveriaLibre-Regular',
     fontSize: 25,
-   
   },
 });
 
