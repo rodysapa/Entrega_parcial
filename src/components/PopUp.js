@@ -1,9 +1,11 @@
 import {View, Text, StyleSheet, Modal} from 'react-native';
+import ModalButton from './ModalButton';
 // import Button from '../components/Button.js';
 
 const PopUp = ({modalVisible, closeModal}) => {
   const deleteResearch = () => {
     console.log('PESQUISA APAGADA!');
+    closeModal();
   };
 
   return (
@@ -21,6 +23,8 @@ const PopUp = ({modalVisible, closeModal}) => {
               Tem certeza de apagar essa pesquisa?
             </Text>
             <View style={styles.container}>
+              <ModalButton text="SIM" textColor="white" backgroundColor="#FF8383" onPress={deleteResearch}/>
+              <ModalButton text="NÃO" textColor="white" backgroundColor="#3f92c5" onPress={closeModal}/>
               {/* <View style={styles.buttonSim}>
                 <Button
                   txtButton="SIM"
@@ -33,7 +37,7 @@ const PopUp = ({modalVisible, closeModal}) => {
               <View style={styles.buttonCancelar}>
                 <Button
                   txtButton="CANCELAR"
-                  buttonColor="#3F92C5"
+                  buttonColor="#FF8383"
                   txtColor="#FFFFFF"
                   buttonHeight={71}
                   functionButton={closeModal}
@@ -71,6 +75,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
     flexDirection: 'row',
+    gap: 15,
   },
   buttonSim: {
     paddingRight: 20,
