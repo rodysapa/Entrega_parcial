@@ -25,24 +25,6 @@ const PopUp = ({modalVisible, closeModal}) => {
             <View style={styles.container}>
               <ModalButton text="SIM" textColor="white" backgroundColor="#FF8383" onPress={deleteResearch}/>
               <ModalButton text="NÃO" textColor="white" backgroundColor="#3f92c5" onPress={closeModal}/>
-              {/* <View style={styles.buttonSim}>
-                <Button
-                  txtButton="SIM"
-                  buttonColor="#FF8383"
-                  txtColor="#FFFFFF"
-                  buttonHeight={71}
-                  functionButton={deleteResearch}
-                />
-              </View>
-              <View style={styles.buttonCancelar}>
-                <Button
-                  txtButton="CANCELAR"
-                  buttonColor="#FF8383"
-                  txtColor="#FFFFFF"
-                  buttonHeight={71}
-                  functionButton={closeModal}
-                />
-              </View> */}
             </View>
           </View>
         </View>
