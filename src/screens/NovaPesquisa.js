@@ -4,7 +4,7 @@ import LabeledTextInput from '../components/LabeledTextInput.js';
 import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
 
-const ModificarPesquisa = () => {
+const NovaPesquisa = () => {
   const [name, setName] = useState('');
   const [data, setData] = useState('');
   const [displayName, setDisplayName] = useState(false);
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModificarPesquisa;
+export default NovaPesquisa;

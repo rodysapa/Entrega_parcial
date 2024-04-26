@@ -17,7 +17,7 @@ const AcoesPesquisa = props => {
         <ActionButton
           icon="file-pen"
           text="Modificar pesquisa"
-          onPress={() => console.log('Navega para algum lugar')}
+          onPress={() => props.navigation.navigate('Modificar Pesquisa')}
         />
         <ActionButton
           icon="chalkboard"
