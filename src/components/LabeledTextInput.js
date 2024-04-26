@@ -4,6 +4,7 @@ import {TextInput, Text, View, StyleSheet} from 'react-native';
 const LabeledTextInput = props => {
 
   const [label, setLabel] = useState('');
+
   return (
     <View style={estilos.viewInput}>
       <Text style={estilos.txt}>{props.txtlabel}</Text>

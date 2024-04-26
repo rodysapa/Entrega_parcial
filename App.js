@@ -1,5 +1,5 @@
 import {StyleSheet, View, Text, TextInput, SafeAreaView, ScrollView} from 'react-native';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import Button_Green from './src/components/Button_Green';
 import Button_Blue from './src/components/Button_Blue';
@@ -8,49 +8,30 @@ import Button_Gray from './src/components/Button_Gray';
 const App = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isEmailValid, setEmailValid] = useState(false);
-  const [isPasswordValid, setPasswordValid] = useState(false);
-  const [message, setMessage] = useState('');
+  const [emailValid, setEmailValid] = useState('');
+  const [passwordValid, setPasswordValid] = useState('');
 
-  const showError = () => {
-    console.log('email: ' + isEmailValid);
-    console.log('senha: ' + isPasswordValid);
-    if (isEmailValid && isPasswordValid) {
-      setMessage('');
-    } else if (isEmailValid && !isPasswordValid) {
-      setMessage('Senha é inválida.');
-    } else if (!isEmailValid && isPasswordValid) {
-      setMessage('Email é inválido.');
-    } else {
-      setMessage('E-mail e/ou senhas inválidas.');
-    }
-  };
-
-  const validateEmail = checkEmail => {
+  useEffect(() => {
     let regex =
-      /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    regex.test(email) && email.trim()? setEmailValid(false): setEmailValid(true);
+    password.trim() && password? setPasswordValid(false): setPasswordValid(true);
+  });
 
-    setEmail(checkEmail);
-    if (regex.test(checkEmail)) {
-      setEmailValid(true);
-    } else {
-      setEmailValid(false);
-    }
-    showError();
-  };
+  const handleNavigate = page => {
+    switch (page) {
+      case 'Home':
+        props.navigation.navigate('Home');
+        break;
+      case 'NovaConta':
+        props.navigation.navigate('Nova Conta');
 
-  const validateSenha = checkSenha => {
-    console.log('aqui' + checkSenha.length);
-    setPassword(checkSenha);
-    if (checkSenha.length > 0) {
-      setPasswordValid(true);
-    } else {
-      setPasswordValid(false);
-      console.log('rorroo' + isPasswordValid);
+        break;
+        case 'RecuperarSenha':
+        props.navigation.navigate('Recuperar Senha');
+
+        break;
     }
-    
-    showError();
-  };
 
   return (
     <SafeAreaView style={estilos.container}>
@@ -62,41 +43,44 @@ const App = (props) => {
       </View>
       <View style={estilos.viewInput}>
         <Text style={estilos.txtInput}>E-mail</Text>
-        <TextInput
+        <TextInput placeholder='XXXXXX@XXXX.com' placeholderTextColor={'rgba(63, 146, 197, 1)'}
           id="txtEmail"
           style={estilos.txtEmail}
           value={email}
-          onChangeText={checkEmail => validateEmail(checkEmail)}
+          onChangeText={setEmail}
         />
+        {emailValid && (<Text style={estilos.txtErro}>Email inválido ou não preenchido
+        </Text>)}
         <Text style={estilos.txtInput}>Senha</Text>
-        <TextInput
+        <TextInput placeholder='**************' placeholderTextColor={'rgba(63, 146, 197, 1)'}
           secureTextEntry={true}
           id="txtSenha"
           style={estilos.txtSenha}
           value={password}
-          onChangeText={checkSenha => validateSenha(checkSenha)}
+          onChangeText={setPassword}
         />
-        <Text style={estilos.txtErro}>{message}</Text>
+        {passwordValid && (<Text style={estilos.txtErro}>Senha inválida
+        </Text>)}
       </View>
 
       <View style={estilos.viewButton}>
-        <Button_Green txtEntrar="Entrar" onPress={() => console.log('alo')} />
+        <Button_Green txtEntrar="Entrar" onPress={() => handleNavigate('Home')} />
       </View>
 
       <View style={estilos.viewBottom}>
         <Button_Blue
           txtConta="Criar minha conta"
-          onPress={() => props.navigation.navigate('CreateAcount')}
+          onPress={() => handleNavigate('NovaConta')}
         />
         <Button_Gray
           txtEsqueciSenha="Esqueci minha senha"
-          onPress={() => props.navigation.navigate('RecorverPassword')}
+          onPress={() => handleNavigate('RecuperarSenha')}
         />
       </View>
     </View>
     </ScrollView>
     </SafeAreaView>
-  );
+  )};
 };
 
 const estilos = StyleSheet.create({
@@ -139,13 +123,15 @@ const estilos = StyleSheet.create({
   txtEmail: {
     backgroundColor: 'white',
     height: 35,
-    color: 'black',
     marginBottom: 15,
+    color: 'rgba(63, 146, 197, 1)',
+    fontFamily: 'AveriaLibre-Regular',
   },
   txtSenha: {
     backgroundColor: 'white',
     height: 35,
-    color: 'black',
+    fontFamily: 'AveriaLibre-Regular',
+    color: 'rgba(63, 146, 197, 1)',
   },
   viewBottom: {
     gap: 7.5,
