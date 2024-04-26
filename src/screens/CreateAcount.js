@@ -1,30 +1,63 @@
-import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {View, StyleSheet, SafeAreaView, ScrollView, Text} from 'react-native';
 import Header from '../components/Header';
 import LabeledTextInput from '../components/LabeledTextInput';
 import Button_Green from '../components/Button_Green';
+import {useEffect, useState} from 'react';
 
 const CreateAcount = props => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [emailValid, setEmailValid] = useState();
+  const [passwordvalid, setPasswordValid] = useState();
+  const [confirmPasswordvalid, setConfirmPasswordValid] = useState();
+
+  useEffect(() => {
+    email && email.trim() ? setEmailValid(false) : setEmailValid(true);
+    password && password.trim()
+      ? setPasswordValid(false)
+      : setPasswordValid(true);
+  }, [email, password]);
+
+  useEffect(() => {
+    password == confirmPassword
+      ? setConfirmPasswordValid(false)
+      : setConfirmPasswordValid(true);
+  }, [password, confirmPassword]);
+
   return (
     <SafeAreaView style={estilos.container}>
       <ScrollView>
-        <Header txtHeader="Nova Conta" onPress={() => props.navigation.pop()} />
         <View style={estilos.viewMother}>
           <View style={estilos.viewInput}>
-            <LabeledTextInput txtlabel="E-mail" onChangeText={props} />
+            <LabeledTextInput
+              txtlabel="E-mail"
+              label={email}
+              setLabel={setEmail}
+            />
+            {emailValid && (
+              <Text style={estilos.txtWarning}>Email Inválido</Text>
+            )}
             <LabeledTextInput
               txtlabel="Senha"
-              value={props}
-              onChangeText={props}
+              label={password}
+              setLabel={setPassword}
             />
+            {passwordvalid && (
+              <Text style={estilos.txtWarning}>Senha Inválida</Text>
+            )}
             <LabeledTextInput
               txtlabel="Repetir senha"
-              value={props}
-              onChangeText={props}
+              label={confirmPassword}
+              setLabel={setConfirmPassword}
             />
+            {confirmPasswordvalid && (
+              <Text style={estilos.txtWarning}>Senha Inválida</Text>
+            )}
           </View>
           <View style={estilos.button}>
             <Button_Green
-              txtEntrar="RECUPERAR"
+              txtEntrar="CADASTRAR"
               onPress={() => props.navigation.pop()}
             />
           </View>
@@ -53,6 +86,9 @@ const estilos = StyleSheet.create({
   button: {
     flex: 0.25,
     paddingTop: '10%',
+  },
+  txtWarning: {
+    color: 'red',
   },
 });
 

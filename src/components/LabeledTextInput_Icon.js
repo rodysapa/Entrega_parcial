@@ -1,24 +1,17 @@
 import {View, StyleSheet, Text, TextInput, Alert} from 'react-native';
+import LabeledTextInput from './LabeledTextInput';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
-const LabelTextInput_Icon = ({
-  label,
-  placeHolder,
-  inputValue,
-  onChangeText,
-}) => {
+const LabelTextInput_Icon = ({label, inputValue, onChangeText}) => {
   return (
     <View style={styles.txtInputContainer}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputIcon}>
         <TextInput
           style={styles.input}
-          placeholder={placeHolder}
           value={inputValue}
           onChangeText={onChangeText}
-          autoCapitalize="none"
         />
-
         <Icon name="calendar" size={20} color="gray" />
       </View>
     </View>
@@ -36,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'AveriaLibre-Regular',
     color: '#3F92C5',
+    flex: 0.99,
   },
   txtInputContainer: {
     marginTop: 10,

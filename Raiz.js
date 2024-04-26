@@ -1,10 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import App from './App';
 import CreateAcount from './src/screens/CreateAcount';
 import RecorverPassword from './src/screens/RecorverPassword';
-import Home from './src/screens/Home';
 import NovaPesquisa from './src/screens/NovaPesquisa';
 import ModificarPesquisa from './src/screens/ModificarPesquisa';
 import Drawer from './src/screens/Drawer';
@@ -12,6 +10,7 @@ import AcoesPesquisa from './src/screens/AcoesPesquisa';
 import Coleta from './src/screens/Coleta';
 import AgradecimentoParticipacao from './src/screens/AgradecimentoParticipacao';
 import Relatorio from './src/screens/Relatorio';
+import Login from './src/screens/Login';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +18,7 @@ const Raiz = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="App"
+        initialRouteName="Login"
         screenOptions={{
           headerStyle: {backgroundColor: '#2B1D62', height: 56},
           headerTintColor: '#573fba',
@@ -31,19 +30,19 @@ const Raiz = () => {
         }}
         sreenOptions={{headerShown: false}}>
         <Stack.Screen
-          name="App"
-          component={App}
+          name="Login"
+          component={Login}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="CreateAcount"
+          name="Nova Conta"
           component={CreateAcount}
-          options={{headerShown: false}}
+          options={{headerShown: true}}
         />
         <Stack.Screen
-          name="RecorverPassword"
+          name="Recuperar Senha"
           component={RecorverPassword}
-          options={{headerShown: false}}
+          options={{headerShown: true}}
         />
         <Stack.Screen
           name="Nova Pesquisa"

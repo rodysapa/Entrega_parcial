@@ -51,7 +51,7 @@ const ModificarPesquisa = () => {
       <TouchableOpacity
         onPress={openModal}
         style={styles.touchableOpacityStyle}>
-        <Icon name="delete" size={35} color="#FFFFFF" />
+        <Icon name="trash" size={35} color="#FFFFFF" />
         <Text style={styles.botao}>Apagar</Text>
       </TouchableOpacity>
       <PopUp modalVisible={modalVisible} closeModal={closeModal} />

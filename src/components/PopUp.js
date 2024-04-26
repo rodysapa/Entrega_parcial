@@ -8,7 +8,7 @@ const PopUp = ({modalVisible, closeModal}) => {
 
   return (
     <View style={styles.centralized}>
-      <PopUp
+      <Modal
         animationType="fade"
         transparent={true}
         visible={modalVisible}
@@ -42,7 +42,7 @@ const PopUp = ({modalVisible, closeModal}) => {
             </View>
           </View>
         </View>
-      </PopUp>
+      </Modal>
     </View>
   );
 };

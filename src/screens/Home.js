@@ -23,14 +23,14 @@ const Home = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.cContent}>
+      <View style={styles.Content}>
         <SearchBar
           placeholder="Insira o termo de busca..."
           value={txtSearch}
           onChangeText={setTxtSearch}
         />
 
-        <ScrollView horizontal style={styles.cCards}>
+        <ScrollView horizontal style={styles.Cards}>
           <CardPesquisa
             img={require('../../assets/images/compCell.png')}
             title="SECOMP 2023"
@@ -74,19 +74,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#372775',
   },
-  cTop: {
-    backgroundColor: '#2B1D62',
-    width: '100%',
-    height: '20%',
-    paddingTop: 10,
-    paddingLeft: 10,
-    flexDirection: 'row',
-  },
-  cContent: {
+  Content: {
     marginVertical: 15,
     paddingHorizontal: '3%',
   },
-  cCards: {
+  Cards: {
     flexDirection: 'row',
     height: 150,
     marginVertical: 18,

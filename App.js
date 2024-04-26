@@ -97,11 +97,11 @@ const App = props => {
           <View style={estilos.viewBottom}>
             <Button_Blue
               txtConta="Criar minha conta"
-              onPress={() => props.navigation.navigate('CreateAcount')}
+              onPress={() => props.navigation.navigate('Nova Conta')}
             />
             <Button_Gray
               txtEsqueciSenha="Esqueci minha senha"
-              onPress={() => props.navigation.navigate('RecorverPassword')}
+              onPress={() => props.navigation.navigate('Recuperar Senha')}
             />
           </View>
         </View>

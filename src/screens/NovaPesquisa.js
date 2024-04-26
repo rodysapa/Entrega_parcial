@@ -1,10 +1,19 @@
 import {useEffect, useState} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import LabeledTextInput from '../components/LabeledTextInput.js';
 import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
+import ImageInput from '../components/ImageInput.js';
 
-const ModificarPesquisa = () => {
+const NovaPesquisa = () => {
   const [name, setName] = useState('');
   const [data, setData] = useState('');
   const [displayName, setDisplayName] = useState(false);
@@ -23,44 +32,42 @@ const ModificarPesquisa = () => {
   }, [name, data]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.cInput}>
-        <LabeledTextInput
-          style={styles.label}
-          txtlabel="Nome"
-          label={name}
-          setLabel={setName}
-        />
-        {displayName && (
-          <Text style={styles.warningText}>Preencha o nome da pesquisa</Text>
-        )}
-        <LabeledTextInput_Icon
-          style={styles.label}
-          label="Data"
-          inputValue={data}
-          onChangeText={setData}
-        />
-        {displayData && <Text style={styles.warningText}>Preencha a data</Text>}
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView style={styles.container}>
+        <View style={styles.cInput}>
+          <LabeledTextInput
+            style={styles.label}
+            txtlabel="Nome"
+            label={name}
+            setLabel={setName}
+          />
+          {displayName && (
+            <Text style={styles.warningText}>Preencha o nome da pesquisa</Text>
+          )}
+          <LabeledTextInput_Icon
+            style={styles.label}
+            label="Data"
+            inputValue={data}
+            onChangeText={setData}
+          />
+          {displayData && (
+            <Text style={styles.warningText}>Preencha a data</Text>
+          )}
 
-        <LabeledTextInput
-          style={styles.label}
-          txtlabel="Imagem"
-          label={imagem}
-          setLabel={setImagem}
-        />
+          <ImageInput ctx="txt" />
 
-        <Button_Green txtEntrar="Nova Pesquisa" onPress={HandleClik} />
-      </View>
-    </View>
+          <Button_Green txtEntrar="Nova Pesquisa" onPress={HandleClik} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 //Estilo do codigo
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center',
+
     backgroundColor: '#372775',
     padding: 20,
     paddingHorizontal: '20%',
@@ -95,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModificarPesquisa;
+export default NovaPesquisa;
