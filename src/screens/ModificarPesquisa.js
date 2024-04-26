@@ -1,56 +1,60 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+
+import Icon from 'react-native-vector-icons/FontAwesome6';
+
 import LabeledTextInput from '../components/LabeledTextInput.js';
 import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
+import PopUp from '../components/PopUp.js';
 
 const ModificarPesquisa = () => {
-  const [name, setName] = useState('');
-  const [data, setData] = useState('');
-  const [displayName, setDisplayName] = useState(false);
-  const [displayData, setDisplayData] = useState(false);
-  const [imagem, setImagem] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const HandleClik = () => {
-    console.log('Nova Pesquisa');
+  const openModal = () => {
+    setModalVisible(true);
   };
 
-  useEffect(() => {
-    if (name.trim()) setDisplayName(false);
-    else setDisplayName(true);
-    if (data.trim()) setDisplayData(false);
-    else setDisplayData(true);
-  }, [name, data]);
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+  //=============================================
+
+  const SalvarModificacao = () => {
+    console.log('BOTAO SALVAR MODIFICACAO');
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.cInput}>
         <LabeledTextInput
           style={styles.label}
-          txtlabel="Nome"
-          label={name}
-          setLabel={setName}
+          label="Nome"
+          placeHolder="Carnaval 2024"
         />
-        {displayName && (
-          <Text style={styles.warningText}>Preencha o nome da pesquisa</Text>
-        )}
         <LabeledTextInput_Icon
           style={styles.label}
           label="Data"
-          inputValue={data}
-          onChangeText={setData}
-        />
-        {displayData && <Text style={styles.warningText}>Preencha a data</Text>}
-
-        <LabeledTextInput
-          style={styles.label}
-          txtlabel="Imagem"
-          label={imagem}
-          setLabel={setImagem}
+          placeHolder="16/02/2024"
+          inputType="DATA"
         />
 
-        <Button_Green txtEntrar="Nova Pesquisa" onPress={HandleClik} />
+        <Text style={styles.label}>Imagem</Text>
+        <Image
+          style={{width: 250, height: 75, marginBottom: 30}}
+          label="Imagem"
+          source={require('../../assets/images/Imagem_projeto.png')}
+        />
+
+        <Button_Green txtEntrar="Salvar" onPress={SalvarModificacao} />
       </View>
+      <TouchableOpacity
+        onPress={openModal}
+        style={styles.touchableOpacityStyle}>
+        <Icon name="delete" size={35} color="#FFFFFF" />
+        <Text style={styles.botao}>Apagar</Text>
+      </TouchableOpacity>
+      <PopUp modalVisible={modalVisible} closeModal={closeModal} />
     </View>
   );
 };
@@ -89,9 +93,6 @@ const styles = StyleSheet.create({
   botao: {
     fontSize: 13,
     color: '#FFFFFF',
-  },
-  warningText: {
-    color: 'red',
   },
 });
 
