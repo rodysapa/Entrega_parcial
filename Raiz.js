@@ -18,7 +18,7 @@ const Raiz = () => {
       <Stack.Navigator
         initialRouteName="App"
         screenOptions={{
-          headerStyle: {backgroundColor: '#2B1D62', height: 80},
+          headerStyle: {backgroundColor: '#2B1D62', height: 56},
           headerTintColor: '#573fba',
           headerTitleStyle: {
             fontFamily: 'AveriaLibre-Regular',

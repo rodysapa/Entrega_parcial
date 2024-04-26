@@ -21,8 +21,8 @@ const CardPesquisa = props => {
 
 const styles = StyleSheet.create({
   Container: {
-    height: 170,
-    width: 190,
+    height: 160,
+    width: 160,
     marginRight: 25,
   },
   card: {

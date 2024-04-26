@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     paddingLeft: 5,
+    height: 32,
   },
   input: {
     flex: 1,
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
     color: '#3F92C5',
     backgroundColor: '#FFFFFF',
     paddingLeft: 5,
-    height: 35,
+    height: 32,
   },
   iconStyle: {
     color: '#aaaaaa',

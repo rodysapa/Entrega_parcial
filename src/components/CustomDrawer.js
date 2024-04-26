@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   email: {
-    // fontFamily: 'AveriaLibre',
+    fontFamily: 'AveriaLibre-Regular',
     fontSize: 24,
     color: 'white',
     alignSelf: 'center',
     marginTop: 5,
   },
   item: {
-    // fontFamily: 'AveriaLibre',
+    fontFamily: 'AveriaLibre-Regular',
     fontSize: 24,
     color: 'white',
   },

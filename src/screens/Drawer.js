@@ -37,7 +37,7 @@ const Drawer = () => {
           headerTitleStyle: {
             color: '#FFFFFF',
             fontSize: 30,
-            fontFamily: 'AveriaLibre',
+            fontFamily: 'AveriaLibre-Regular',
           },
           headerTintColor: 'white',
           drawerActiveBackgroundColor: '#2B1F5C',
@@ -61,7 +61,7 @@ export default Drawer;
 
 const styles = StyleSheet.create({
   label: {
-    fontFamily: 'AveriaLibre',
+    fontFamily: 'AveriaLibre-Regular',
     fontSize: 24,
     color: 'white',
   },
