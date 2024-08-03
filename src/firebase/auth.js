@@ -14,6 +14,15 @@ const auth = initializeAuth(app, {
 })
 
 export async function createUser(email, password) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    return userCredential.user
+  } catch (error) {
+    console.log('Erro ao criar usuário: ', error)
+    return null
+  }
+
+  /*
   return await createUserWithEmailAndPassword(auth, email, password)
     .then(userCredential => {
       // Usuário criado com sucesso
@@ -23,7 +32,7 @@ export async function createUser(email, password) {
     .catch(error => {
       // Tratar erros
       console.error('Erro ao criar usuário:', error);
-    });
+    }); */
 }
 
 export async function signInUser(email, password) {
@@ -37,13 +46,11 @@ export async function signInUser(email, password) {
 }
 
 export async function resetPassword(email) {
-  return await sendPasswordResetEmail(auth, email)
+  sendPasswordResetEmail(auth, email)
     .then(() => {
-      // Email de recuperação enviado com sucesso
       console.log('Email de recuperação enviado');
     })
     .catch(error => {
-      // Tratar erros
       console.error('Erro ao enviar email de recuperação:', error);
     });
 }
