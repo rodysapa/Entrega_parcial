@@ -24,12 +24,22 @@ const NovaPesquisa = () => {
   
   const [image, setImage] = useState();
 
-  const createSurveyButtonPressed = () => {
+  const createSurveyButtonPressed = async () => {
     console.log('Jorge')
-    if (image)
-      createSurvey(name, date, image)
-    else 
+    if (!image) {
       console.log('Definiar imagem para criar pesquisa')
+      return
+    }
+
+    /*
+    let imageFile
+    try {
+      imageFile = await fetch(image.uri)
+    } catch (error) {
+      console.log("Não foi possível abrir imagem devido a um erro: ", error)
+      return
+    } */
+    createSurvey(name, date, image)
   };
 
   useEffect(() => {
