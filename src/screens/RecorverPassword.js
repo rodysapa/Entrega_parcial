@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import LabeledTextInput from '../components/LabeledTextInput';
 import Button_Green from '../components/Button_Green';
+import {resetPassword} from '../firebase/auth';
 
 const CreateAcount = props => {
   const [email, setEmail] = useState();
@@ -11,6 +12,11 @@ const CreateAcount = props => {
   useEffect(() => {
     email && email.trim() ? setEmailValid(false) : setEmailValid(true);
   }, [email]);
+
+  const handlePasswordChange = () => {
+    resetPassword(email);
+    props.navigation.pop();
+  };
   return (
     <SafeAreaView style={estilos.container}>
       <ScrollView>
@@ -28,7 +34,7 @@ const CreateAcount = props => {
             </View>
             <Button_Green
               txtEntrar="RECUPERAR"
-              onPress={() => props.navigation.pop()}
+              onPress={() => handlePasswordChange()}
             />
           </View>
         </View>

@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6';
 import Button_Blue from '../components/Button_Blue';
 import Button_Gray from '../components/Button_Gray';
 import Button_Green from '../components/Button_Green';
+import {signInUser} from '../firebase/auth';
 
 const Login = props => {
   const [email, setEmail] = useState('');
@@ -43,6 +44,11 @@ const Login = props => {
 
         break;
     }
+  };
+
+  const handleLogin = () => {
+    signInUser(email, password);
+    handleNavigate('Home');
   };
 
   return (
@@ -84,10 +90,7 @@ const Login = props => {
           </View>
 
           <View style={estilos.viewButton}>
-            <Button_Green
-              txtEntrar="Entrar"
-              onPress={() => handleNavigate('Home')}
-            />
+            <Button_Green txtEntrar="Entrar" onPress={() => handleLogin()} />
           </View>
 
           <View style={estilos.viewBottom}>

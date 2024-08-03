@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import LabeledTextInput from '../components/LabeledTextInput';
 import Button_Green from '../components/Button_Green';
 import {useEffect, useState} from 'react';
+import {createUser} from '../firebase/auth';
 
 const CreateAcount = props => {
   const [email, setEmail] = useState();
@@ -24,6 +25,11 @@ const CreateAcount = props => {
       ? setConfirmPasswordValid(false)
       : setConfirmPasswordValid(true);
   }, [password, confirmPassword]);
+
+  const handleCadastrar = () => {
+    createUser(email, password);
+    props.navigation.pop();
+  };
 
   return (
     <SafeAreaView style={estilos.container}>
@@ -58,7 +64,7 @@ const CreateAcount = props => {
           <View style={estilos.button}>
             <Button_Green
               txtEntrar="CADASTRAR"
-              onPress={() => props.navigation.pop()}
+              onPress={() => handleCadastrar()}
             />
           </View>
         </View>
