@@ -19,6 +19,8 @@ const Login = props => {
   const [emailValid, setEmailValid] = useState('');
   const [passwordValid, setPasswordValid] = useState('');
 
+  const [loginErrorMessage, setLoginErrorMessage]= useState('')
+
   useEffect(() => {
     let regex =
       /^[a-zA-Z0-9.!#$%&'+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/;
@@ -46,8 +48,13 @@ const Login = props => {
     }
   };
 
-  const handleLogin = () => {
-    signInUser(email, password);
+  const handleLogin = async () => {
+    const user = await signInUser(email, password)
+    if (!user) {
+      setLoginErrorMessage('Email ou senha incorretos')
+      return
+    } 
+    setLoginErrorMessage('')
     handleNavigate('Home');
   };
 
@@ -88,6 +95,10 @@ const Login = props => {
               <Text style={estilos.txtErro}>Senha inválida</Text>
             )}
           </View>
+
+          { loginErrorMessage && (
+            <Text style={estilos.txtErro}>{loginErrorMessage}</Text>
+          )}
 
           <View style={estilos.viewButton}>
             <Button_Green txtEntrar="Entrar" onPress={() => handleLogin()} />

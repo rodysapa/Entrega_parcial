@@ -27,16 +27,13 @@ export async function createUser(email, password) {
 }
 
 export async function signInUser(email, password) {
-  return await signInWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      // Usuário logado com sucesso
-      const user = userCredential.user;
-      return user;
-    })
-    .catch(error => {
-      // Tratar erros
-      console.error('Erro ao fazer login:', error);
-    });
+  try {
+    const user = await signInWithEmailAndPassword(auth, email, password)
+  } catch (error) {
+    console.log('Erro ao fazer login: ', error)
+    return null
+  }
+  return user
 }
 
 export async function resetPassword(email) {
