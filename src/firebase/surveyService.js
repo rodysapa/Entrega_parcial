@@ -25,7 +25,7 @@ export async function createSurvey(name, date, imageFile) {
     await uploadBytes(imageRef, imageFile);
     const imageUrl = await getDownloadURL(imageRef);
 
-    // Adicionar a pesquisa ao Firestore
+    // Adicionar a pesquisa ao Firestore database
     const docRef = await addDoc(collection(db, 'surveys'), {
       name,
       date,
@@ -43,7 +43,6 @@ export async function createSurvey(name, date, imageFile) {
     return docRef.id;
   } catch (error) {
     console.error('Erro ao criar pesquisa:', error);
-    throw error;
   }
 }
 
@@ -61,7 +60,6 @@ export async function getSurveys() {
     return surveys;
   } catch (error) {
     console.error('Erro ao obter pesquisas:', error);
-    throw error;
   }
 }
 
@@ -99,7 +97,6 @@ export async function updateSurvey(id, {name, date, imageFile}) {
     console.log('Pesquisa atualizada com ID:', id);
   } catch (error) {
     console.error('Erro ao atualizar pesquisa:', error);
-    throw error;
   }
 }
 
@@ -114,7 +111,6 @@ export async function deleteSurvey(id) {
     console.log('Pesquisa deletada com ID:', id);
   } catch (error) {
     console.error('Erro ao deletar pesquisa:', error);
-    throw error;
   }
 }
 
@@ -138,6 +134,5 @@ export async function addRating(surveyId, ratingType) {
     );
   } catch (error) {
     console.error('Erro ao atualizar nota:', error);
-    throw error;
   }
 }

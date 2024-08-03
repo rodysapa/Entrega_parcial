@@ -13,23 +13,31 @@ import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
 import ImageInput from '../components/ImageInput.js';
 
+import { createSurvey } from '../firebase/surveyService.js'
+
 const NovaPesquisa = () => {
   const [name, setName] = useState('');
-  const [data, setData] = useState('');
-  const [displayName, setDisplayName] = useState(false);
-  const [displayData, setDisplayData] = useState(false);
-  const [imagem, setImagem] = useState();
+  const [date, setDate] = useState('');
 
-  const HandleClik = () => {
-    console.log('Nova Pesquisa');
+  const [displayName, setDisplayName] = useState(false);
+  const [displayDate, setDisplayDate] = useState(false);
+  
+  const [image, setImage] = useState();
+
+  const createSurveyButtonPressed = () => {
+    console.log('Jorge')
+    if (image)
+      createSurvey(name, date, image)
+    else 
+      console.log('Definiar imagem para criar pesquisa')
   };
 
   useEffect(() => {
     if (name.trim()) setDisplayName(false);
     else setDisplayName(true);
-    if (data.trim()) setDisplayData(false);
-    else setDisplayData(true);
-  }, [name, data]);
+    if (date.trim()) setDisplayDate(false);
+    else setDisplayDate(true);
+  }, [name, date]);
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -47,16 +55,15 @@ const NovaPesquisa = () => {
           <LabeledTextInput_Icon
             style={styles.label}
             label="Data"
-            inputValue={data}
-            onChangeText={setData}
+            inputValue={date}
+            onChangeText={setDate}
           />
-          {displayData && (
+          {displayDate && (
             <Text style={styles.warningText}>Preencha a data</Text>
           )}
+          <ImageInput setImageCallback={setImage} />
 
-          <ImageInput ctx="txt" />
-
-          <Button_Green txtEntrar="Nova Pesquisa" onPress={HandleClik} />
+          <Button_Green txtEntrar="Nova Pesquisa" onPress={createSurveyButtonPressed} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -67,7 +74,6 @@ const NovaPesquisa = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-
     backgroundColor: '#372775',
     padding: 20,
     paddingHorizontal: '20%',

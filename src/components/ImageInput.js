@@ -1,26 +1,48 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import { useState } from 'react'
+import {StyleSheet, Text, View, Image, Touchable} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import { launchImageLibrary } from 'react-native-image-picker'
 
 const ImageInput = props => {
-  const ctx = props.ctx || 'image';
+  const setImage = props.setImageCallback
+
+  const [imageURI, setImagePath] = useState('')
+
+  const selectFile = async () => {
+    let result 
+    try {
+      result = await launchImageLibrary({mediaType: 'photo'})
+    } catch (error) {
+      console.log('Erro ao selecionar imagem da galeria: ', error)
+      return
+    }
+    if (result.didCancel) return
+    console.log(result.assets)
+    setImagePath(result.assets[0].uri)
+    setImage(result.assets[0])
+  }
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.label}>Imagem</Text>
       </View>
-      <View style={styles.cImageInput}>
-        {ctx === 'image' ? (
-          <>
-            <Image
-              style={styles.image}
-              label="Imagem"
-              source={require('../../assets/images/Imagem_projeto.png')}
-            />
-          </>
-        ) : (
-          <Text style={styles.txt}>Câmera/Galeria de imagens</Text>
-        )}
-      </View>
+      <TouchableOpacity onPress={selectFile}>
+        <View style={styles.cImageInput}>
+          { imageURI ? (
+            <>
+              <Image
+                style={styles.image}
+                label="Imagem"
+                source={{uri: imageURI}}
+              />
+            </>
+          ) : (
+            <Text style={styles.txt}>Galeria de imagens</Text>
+          )}
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
