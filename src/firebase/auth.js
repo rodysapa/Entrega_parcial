@@ -5,9 +5,13 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth'
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage'
 import app from './config';
 
-const auth = getAuth(app);
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+})
 
 export async function createUser(email, password) {
   return await createUserWithEmailAndPassword(auth, email, password)
