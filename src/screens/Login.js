@@ -123,11 +123,12 @@ const Login = props => {
 const estilos = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'rgba(55, 39, 117, 1)',
   },
   main_view: {
-    backgroundColor: 'rgba(55, 39, 117, 1)',
-    paddingHorizontal: '25%',
-    paddingVertical: '2.5%',
+    paddingHorizontal: '20%',
+    marginVertical: 5,
+    // paddingVertical: '2.5%',
     flex: 1,
   },
   view_title: {
@@ -136,14 +137,14 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     flex: 20,
-    paddingBottom: '3.5%',
+    // paddingBottom: '3.5%',
   },
   viewInput: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     flex: 35,
-    paddingBottom: '5%',
+    paddingVertical: 5,
   },
   viewButton: {
     display: 'flex',
@@ -160,7 +161,6 @@ const estilos = StyleSheet.create({
   txtEmail: {
     backgroundColor: 'white',
     height: 35,
-    marginBottom: 15,
     color: 'rgba(63, 146, 197, 1)',
     fontFamily: 'AveriaLibre-Regular',
   },
@@ -171,7 +171,7 @@ const estilos = StyleSheet.create({
     color: 'rgba(63, 146, 197, 1)',
   },
   viewBottom: {
-    gap: 7.5,
+    gap: 10,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',

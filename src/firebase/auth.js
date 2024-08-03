@@ -29,11 +29,11 @@ export async function createUser(email, password) {
 export async function signInUser(email, password) {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password)
+    return user
   } catch (error) {
     console.log('Erro ao fazer login: ', error)
     return null
   }
-  return user
 }
 
 export async function resetPassword(email) {
