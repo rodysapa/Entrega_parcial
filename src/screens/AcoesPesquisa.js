@@ -9,8 +9,10 @@ import {
 import HeaderNavigation from '../components/HeaderNavigation';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import ActionButton from '../components/ActionButton';
+import {useSurvey} from '../Contexts/SurveyContext';
 
 const AcoesPesquisa = props => {
+  const {selectedSurvey} = useSurvey();
   return (
     <>
       <View style={styles.container}>

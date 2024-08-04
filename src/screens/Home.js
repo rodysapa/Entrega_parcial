@@ -9,12 +9,13 @@ import {getSurveys} from '../firebase/surveyService.js';
 import {resetPassword} from '../firebase/auth.js';
 
 import {useAuth} from '../Contexts/AuthContext.js';
+import {useSurvey} from '../Contexts/SurveyContext.js';
 
 const Home = props => {
   const [txtSearch, setTxtSearch] = useState('');
   const [userServeys, setUserServeys] = useState();
   const user = useAuth().user;
-
+  const {setSelectedSurvey} = useSurvey();
   const handleNavigate = page => {
     switch (page) {
       case 'Carnaval':
@@ -26,6 +27,12 @@ const Home = props => {
         break;
     }
   };
+
+  const handleCardPress = surveyObj => {
+    setSelectedSurvey(surveyObj);
+    handleNavigate('Carnaval');
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,7 +61,7 @@ const Home = props => {
               title={survey.name}
               img={survey.image}
               date={survey.date}
-              onPress={() => handleNavigate('Carnaval')}
+              onPress={() => handleCardPress(survey)}
             />
           ))}
           {

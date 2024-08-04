@@ -1,5 +1,12 @@
 import {useState} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity, Modal} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
@@ -7,9 +14,12 @@ import LabeledTextInput from '../components/LabeledTextInput.js';
 import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
 import PopUp from '../components/PopUp.js';
+import {useSurvey} from '../Contexts/SurveyContext.js';
 
 const ModificarPesquisa = () => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const {selectedSurvey} = useSurvey();
 
   const openModal = () => {
     setModalVisible(true);
@@ -30,12 +40,12 @@ const ModificarPesquisa = () => {
         <LabeledTextInput
           style={styles.label}
           label="Nome"
-          placeHolder="Carnaval 2024"
+          placeHolder={selectedSurvey?.name}
         />
         <LabeledTextInput_Icon
           style={styles.label}
           label="Data"
-          placeHolder="16/02/2024"
+          placeHolder={selectedSurvey?.data}
           inputType="DATA"
         />
 
@@ -43,7 +53,7 @@ const ModificarPesquisa = () => {
         <Image
           style={{width: 250, height: 75, marginBottom: 30}}
           label="Imagem"
-          source={require('../../assets/images/Imagem_projeto.png')}
+          source={{uri: selectedSurvey?.img}}
         />
 
         <Button_Green txtEntrar="Salvar" onPress={SalvarModificacao} />
