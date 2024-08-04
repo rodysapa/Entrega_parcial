@@ -5,6 +5,8 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import SearchBar from '../components/SearchBar.js';
 import CardPesquisa from '../components/CardPesquisa.js';
 import Button_Green from '../components/Button_Green.js';
+import { getSurveys } from '../firebase/surveyService.js';
+import { resetPassword } from '../firebase/auth.js';
 
 const Home = props => {
   const [txtSearch, setTxtSearch] = useState('');
@@ -31,7 +33,13 @@ const Home = props => {
         />
 
         <ScrollView horizontal style={styles.Cards}>
-          <CardPesquisa
+          
+          
+          {
+            getSurveys().then(response => {
+              console.log(response)
+            })
+          /* <CardPesquisa
             img={require('../../assets/images/compCell.png')}
             title="SECOMP 2023"
             date="10/10/2023"
@@ -54,7 +62,7 @@ const Home = props => {
             title="PESQUISA"
             date="32/13/2024"
             onPress={() => handleNavigate('Carnaval')}
-          />
+          /> */}
         </ScrollView>
 
         <View style={styles.button}>

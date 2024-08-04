@@ -25,11 +25,15 @@ const storage = getStorage(app);
 export async function createSurvey(name, date, imageAsset) {
   try {
     // Abrir o blob da imagem
-    const imageUri = await fetch(imageAsset.uri)
-    const imageBlob = imageUri.blob()
+    const file = await fetch(imageAsset.uri)
+    console.log('Got image File: ', file)
+    const blob = await file.blob()
+    console.log('Got image blob: ', blob)
+
     // Armazenar a imagem no Firebase Storage
     const imageRef = ref(storage, `surveys/${name}/${imageAsset.fileName}`);
-    await uploadBytes(imageRef, imageBlob, {contentType: 'image/jpeg'});
+    await uploadBytes(imageRef, blob, {contentType: imageAsset.type});
+
     const imageUrl = await getDownloadURL(imageRef);
 
     // Adicionar a pesquisa ao Firestore database
