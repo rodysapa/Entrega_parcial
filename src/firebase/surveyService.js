@@ -1,5 +1,3 @@
-// searchesController.js
-
 import {
   getFirestore,
   collection,
@@ -9,35 +7,31 @@ import {
   updateDoc,
   deleteDoc,
   query,
+  increment,
 } from 'firebase/firestore';
 import {getStorage, ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 import app from './config';
 
-// Inicializar Firebase
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// Função para criar uma nova pesquisa
-/**
- * 
- * @param {Asset} imageAsset 
- */
-export async function createSurvey(name, date, imageAsset) {
+export async function createSurvey(userId, name, date, imageAsset) {
   try {
     // Abrir o blob da imagem
-    const file = await fetch(imageAsset.uri)
-    console.log('Got image File: ', file)
-    const blob = await file.blob()
-    console.log('Got image blob: ', blob)
+    const file = await fetch(imageAsset.uri);
+    const blob = await file.blob();
 
     // Armazenar a imagem no Firebase Storage
-    const imageRef = ref(storage, `surveys/${name}/${imageAsset.fileName}`);
+    const imageRef = ref(
+      storage,
+      `surveys/${userId}/${name}/${imageAsset.fileName}`,
+    );
     await uploadBytes(imageRef, blob, {contentType: imageAsset.type});
 
     const imageUrl = await getDownloadURL(imageRef);
 
-    // Adicionar a pesquisa ao Firestore database
-    const docRef = await addDoc(collection(db, 'surveys'), {
+    // Adicionar a pesquisa à subcoleção do usuário no Firestore
+    const docRef = await addDoc(collection(db, 'users', userId, 'surveys'), {
       name,
       date,
       imageUrl,
@@ -57,27 +51,30 @@ export async function createSurvey(name, date, imageAsset) {
   }
 }
 
-// Função para ler todas as pesquisas
-export async function getSurveys() {
+// Função para obter todas as pesquisas de um usuário
+export async function getSurveys(userId) {
+  const surveys = [];
   try {
-    const q = query(collection(db, 'surveys'));
-    const querySnapshot = await getDocs(q);
-    const surveys = [];
+    const querySnapshot = await getDocs(
+      collection(db, 'users', userId, 'surveys'),
+    );
 
     querySnapshot.forEach(doc => {
+      console.log(doc.data());
       surveys.push({id: doc.id, ...doc.data()});
     });
 
     return surveys;
   } catch (error) {
     console.error('Erro ao obter pesquisas:', error);
+    return surveys;
   }
 }
 
 // Função para atualizar uma pesquisa
-export async function updateSurvey(id, {name, date, imageFile}) {
+export async function updateSurvey(userId, surveyId, {name, date, imageFile}) {
   try {
-    const surveyRef = doc(db, 'surveys', id);
+    const surveyRef = doc(db, 'users', userId, 'surveys', surveyId);
 
     // Obter os dados atuais da pesquisa
     const surveyDoc = await surveyRef.get();
@@ -92,7 +89,7 @@ export async function updateSurvey(id, {name, date, imageFile}) {
       // Armazenar a nova imagem no Firebase Storage
       const imageRef = ref(
         storage,
-        `surveys/${name || currentData.name}/${imageFile.name}`,
+        `surveys/${userId}/${name || currentData.name}/${imageFile.name}`,
       );
       await uploadBytes(imageRef, imageFile);
       imageUrl = await getDownloadURL(imageRef);
@@ -105,27 +102,27 @@ export async function updateSurvey(id, {name, date, imageFile}) {
       imageUrl,
     });
 
-    console.log('Pesquisa atualizada com ID:', id);
+    console.log('Pesquisa atualizada com ID:', surveyId);
   } catch (error) {
     console.error('Erro ao atualizar pesquisa:', error);
   }
 }
 
 // Função para deletar uma pesquisa
-export async function deleteSurvey(id) {
+export async function deleteSurvey(userId, surveyId) {
   try {
-    const surveyRef = doc(db, 'surveys', id);
+    const surveyRef = doc(db, 'users', userId, 'surveys', surveyId);
 
     // Excluir o documento da pesquisa
     await deleteDoc(surveyRef);
 
-    console.log('Pesquisa deletada com ID:', id);
+    console.log('Pesquisa deletada com ID:', surveyId);
   } catch (error) {
     console.error('Erro ao deletar pesquisa:', error);
   }
 }
 
-export async function addRating(surveyId, ratingType) {
+export async function addRating(userId, surveyId, ratingType) {
   try {
     // Verifica se o tipo de nota é válido
     const validRatings = ['terrible', 'bad', 'neutral', 'good', 'excellent'];
@@ -133,7 +130,7 @@ export async function addRating(surveyId, ratingType) {
       throw new Error('Tipo de nota inválido');
     }
 
-    const surveyRef = doc(db, 'surveys', surveyId);
+    const surveyRef = doc(db, 'users', userId, 'surveys', surveyId);
 
     // Atualiza a nota selecionada, adicionando +1
     await updateDoc(surveyRef, {

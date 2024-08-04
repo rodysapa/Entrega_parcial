@@ -12,81 +12,85 @@ import AgradecimentoParticipacao from './src/screens/AgradecimentoParticipacao';
 import Relatorio from './src/screens/Relatorio';
 import Login from './src/screens/Login';
 
+import {AuthProvider} from './src/Contexts/AuthContext';
+
 const Stack = createStackNavigator();
 
 const Raiz = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={{
-          headerStyle: {backgroundColor: '#2B1D62', height: 56},
-          headerTintColor: '#573fba',
-          headerTitleStyle: {
-            fontFamily: 'AveriaLibre-Regular',
-            color: '#FFFFFF',
-            fontSize: 30,
-          },
-        }}
-        sreenOptions={{headerShown: false}}>
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Nova Conta"
-          component={CreateAcount}
-          options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="Recuperar Senha"
-          component={RecorverPassword}
-          options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="Nova Pesquisa"
-          component={NovaPesquisa}
-          options={{headerShown: true}}
-        />
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{
+            headerStyle: {backgroundColor: '#2B1D62', height: 56},
+            headerTintColor: '#573fba',
+            headerTitleStyle: {
+              fontFamily: 'AveriaLibre-Regular',
+              color: '#FFFFFF',
+              fontSize: 30,
+            },
+          }}
+          sreenOptions={{headerShown: false}}>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Nova Conta"
+            component={CreateAcount}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="Recuperar Senha"
+            component={RecorverPassword}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="Nova Pesquisa"
+            component={NovaPesquisa}
+            options={{headerShown: true}}
+          />
 
-        <Stack.Screen
-          name="Modificar Pesquisa"
-          component={ModificarPesquisa}
-          options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="Drawer"
-          component={Drawer}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Carnaval"
-          component={AcoesPesquisa}
-          options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="AcoesPesquisa"
-          component={AcoesPesquisa}
-          options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="Coleta"
-          component={Coleta}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Relatorio"
-          component={Relatorio}
-          options={{headerShown: true}}
-        />
-        <Stack.Screen
-          name="AgradecimentoParticipacao"
-          component={AgradecimentoParticipacao}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="Modificar Pesquisa"
+            component={ModificarPesquisa}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="Drawer"
+            component={Drawer}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Carnaval"
+            component={AcoesPesquisa}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="AcoesPesquisa"
+            component={AcoesPesquisa}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="Coleta"
+            component={Coleta}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Relatorio"
+            component={Relatorio}
+            options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="AgradecimentoParticipacao"
+            component={AgradecimentoParticipacao}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 };
 

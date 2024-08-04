@@ -9,7 +9,7 @@ const CardPesquisa = props => {
   return (
     <View style={styles.Container}>
       <TouchableOpacity style={styles.card} onPress={() => props.onPress(page)}>
-        <Image style={styles.imgStyle} source={img} />
+        <Image style={styles.imgStyle} source={{uri: img}} />
         <View style={styles.txtContainer}>
           <Text style={styles.txtTitle}>{title}</Text>
           <Text style={styles.txtDate}>{date}</Text>

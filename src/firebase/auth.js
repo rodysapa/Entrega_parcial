@@ -4,53 +4,60 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
 } from 'firebase/auth';
-
-import { initializeAuth, getReactNativePersistence } from 'firebase/auth'
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage'
+import {initializeAuth, getReactNativePersistence} from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import {getFirestore, doc, setDoc} from 'firebase/firestore';
 import app from './config';
 
 const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
-})
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
+
+const db = getFirestore(app);
 
 export async function createUser(email, password) {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-    return userCredential.user
-  } catch (error) {
-    console.log('Erro ao criar usuário: ', error)
-    return null
-  }
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    const user = userCredential.user;
 
-  /*
-  return await createUserWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      // Usuário criado com sucesso
-      const user = userCredential.user;
-      return user;
-    })
-    .catch(error => {
-      // Tratar erros
-      console.error('Erro ao criar usuário:', error);
-    }); */
+    // Adicionar o usuário à coleção `users`
+    await setDoc(doc(db, 'users', user.uid), {
+      email,
+      createdAt: new Date(),
+    });
+
+    return user;
+  } catch (error) {
+    console.log('Erro ao criar usuário: ', error);
+    return null;
+  }
 }
 
 export async function signInUser(email, password) {
   try {
-    const user = await signInWithEmailAndPassword(auth, email, password)
-    return user
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    );
+    return userCredential.user;
   } catch (error) {
-    console.log('Erro ao fazer login: ', error)
-    return null
+    console.log('Erro ao fazer login: ', error);
+    return null;
   }
 }
 
 export async function resetPassword(email) {
-  sendPasswordResetEmail(auth, email)
-    .then(() => {
-      console.log('Email de recuperação enviado');
-    })
-    .catch(error => {
-      console.error('Erro ao enviar email de recuperação:', error);
-    });
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log('Email de recuperação enviado');
+  } catch (error) {
+    console.error('Erro ao enviar email de recuperação:', error);
+  }
 }
+
+export default auth;

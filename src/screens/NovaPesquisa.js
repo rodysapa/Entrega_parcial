@@ -13,7 +13,8 @@ import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
 import ImageInput from '../components/ImageInput.js';
 
-import { createSurvey } from '../firebase/surveyService.js'
+import {createSurvey} from '../firebase/surveyService.js';
+import {useAuth} from '../Contexts/AuthContext.js';
 
 const NovaPesquisa = () => {
   const [name, setName] = useState('');
@@ -21,14 +22,16 @@ const NovaPesquisa = () => {
 
   const [displayName, setDisplayName] = useState(false);
   const [displayDate, setDisplayDate] = useState(false);
-  
+
   const [image, setImage] = useState();
 
+  const user = useAuth().user;
+
   const createSurveyButtonPressed = async () => {
-    console.log('Jorge')
+    console.log('Jorge');
     if (!image) {
-      console.log('Definiar imagem para criar pesquisa')
-      return
+      console.log('Definiar imagem para criar pesquisa');
+      return;
     }
 
     /*
@@ -39,7 +42,8 @@ const NovaPesquisa = () => {
       console.log("Não foi possível abrir imagem devido a um erro: ", error)
       return
     } */
-    createSurvey(name, date, image)
+    console.log(user);
+    createSurvey(user.uid, name, date, image);
   };
 
   useEffect(() => {
@@ -73,7 +77,10 @@ const NovaPesquisa = () => {
           )}
           <ImageInput setImageCallback={setImage} />
 
-          <Button_Green txtEntrar="Nova Pesquisa" onPress={createSurveyButtonPressed} />
+          <Button_Green
+            txtEntrar="Nova Pesquisa"
+            onPress={createSurveyButtonPressed}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
