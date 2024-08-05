@@ -33,18 +33,18 @@ const ModificarPesquisa = () => {
   const SalvarModificacao = () => {
     console.log('BOTAO SALVAR MODIFICACAO');
   };
-
+  console.log(selectedSurvey);
   return (
     <View style={styles.container}>
       <View style={styles.cInput}>
         <LabeledTextInput
           style={styles.label}
-          label="Nome"
+          label={selectedSurvey?.name}
           placeHolder={selectedSurvey?.name}
         />
         <LabeledTextInput_Icon
           style={styles.label}
-          label="Data"
+          label={selectedSurvey?.data}
           placeHolder={selectedSurvey?.data}
           inputType="DATA"
         />
@@ -53,7 +53,7 @@ const ModificarPesquisa = () => {
         <Image
           style={{width: 250, height: 75, marginBottom: 30}}
           label="Imagem"
-          source={{uri: selectedSurvey?.img}}
+          source={{uri: selectedSurvey?.imageUrl}}
         />
 
         <Button_Green txtEntrar="Salvar" onPress={SalvarModificacao} />

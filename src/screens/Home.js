@@ -56,14 +56,17 @@ const Home = props => {
         />
 
         <ScrollView horizontal style={styles.Cards}>
-          {userServeys?.map(survey => (
-            <CardPesquisa
-              title={survey.name}
-              img={survey.image}
-              date={survey.date}
-              onPress={() => handleCardPress(survey)}
-            />
-          ))}
+          {userServeys?.map(
+            survey => (
+              <CardPesquisa
+                title={survey.name}
+                img={survey.imageUrl}
+                date={survey.date}
+                onPress={() => handleCardPress(survey)}
+              />
+            ),
+            // console.log(survey),
+          )}
           {
             // getSurveys().then(response => {
             //   console.log(response)
