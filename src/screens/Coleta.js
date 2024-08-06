@@ -1,7 +1,10 @@
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {useState} from 'react';
-
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import { addRating } from '../firebase/surveyService'; // Importe a função de adicionar nota
+import { useNavigation } from '@react-navigation/native';
+import { getAuth } from 'firebase/auth';
+import { useSurvey } from '../Contexts/SurveyContext';
 
 const FeedbackButton = props => {
   return (
@@ -14,15 +17,50 @@ const FeedbackButton = props => {
 
 const Coleta = props => {
   const [feedbackLevel, setFeedbackLevel] = useState(0);
+  const navigation = useNavigation();
+  const { selectedSurvey } = useSurvey();
 
-  const collectFeedback = level => {
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        setUserId(user.uid);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const surveyId = selectedSurvey?.id; // Supondo que selectedSurvey é um objeto que contém um campo 'id'
+  console.log('dados pesquisa', selectedSurvey);
+
+  const collectFeedback = async (level) => {
+    if (!userId || !surveyId) {
+      console.error('Usuário ou ID da pesquisa não definidos');
+      return;
+    }
+    
     setFeedbackLevel(level);
-    props.navigation.navigate('AgradecimentoParticipacao');
+    
+    // Mapeia o nível de feedback para o tipo de nota
+    const ratingTypes = ['terrible', 'bad', 'neutral', 'good', 'excellent'];
+    const ratingType = ratingTypes[level];
+    
+    try {
+      // Chame a função para adicionar a nota ao banco de dados
+      await addRating(userId, surveyId, ratingType);
+      navigation.navigate('AgradecimentoParticipacao');
+    } catch (error) {
+      console.error('Erro ao adicionar nota:', error);
+    }
   };
 
   const gotoBackstage = () => {
     // Navega para a tela de configuração da pesquisa
-    props.navigation.pop();
+    navigation.pop();
   };
 
   return (

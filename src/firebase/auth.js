@@ -5,7 +5,7 @@ import {
   sendPasswordResetEmail,
 } from 'firebase/auth';
 import {initializeAuth, getReactNativePersistence} from 'firebase/auth';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';;
 import {getFirestore, doc, setDoc} from 'firebase/firestore';
 import app from './config';
 

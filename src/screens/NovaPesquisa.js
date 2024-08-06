@@ -29,7 +29,7 @@ const NovaPesquisa = () => {
 
   const createSurveyButtonPressed = async () => {
     console.log('Jorge');
-    if (!image) {
+    /*if (!image) {
       console.log('Definiar imagem para criar pesquisa');
       return;
     }

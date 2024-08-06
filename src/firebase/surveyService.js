@@ -124,22 +124,19 @@ export async function deleteSurvey(userId, surveyId) {
 
 export async function addRating(userId, surveyId, ratingType) {
   try {
-    // Verifica se o tipo de nota é válido
     const validRatings = ['terrible', 'bad', 'neutral', 'good', 'excellent'];
     if (!validRatings.includes(ratingType)) {
       throw new Error('Tipo de nota inválido');
     }
 
     const surveyRef = doc(db, 'users', userId, 'surveys', surveyId);
-
-    // Atualiza a nota selecionada, adicionando +1
     await updateDoc(surveyRef, {
       [`ratings.${ratingType}`]: increment(1),
+      
     });
 
-    console.log(
-      `Nota ${ratingType} atualizada com sucesso na pesquisa com ID: ${surveyId}`,
-    );
+    console.log('dados pesquisa', surveyId);
+    console.log(`Nota ${ratingType} atualizada com sucesso na pesquisa com ID: ${surveyId}`);
   } catch (error) {
     console.error('Erro ao atualizar nota:', error);
   }

@@ -13,7 +13,7 @@ import {useSurvey} from '../Contexts/SurveyContext';
 
 const AcoesPesquisa = props => {
   const {selectedSurvey} = useSurvey();
-  console.log(selectedSurvey);
+  console.log('aqui', selectedSurvey);
   return (
     <>
       <View style={styles.container}>
