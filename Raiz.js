@@ -16,7 +16,6 @@ import {AuthProvider} from './src/Contexts/AuthContext';
 import {SurveyProvider} from './src/Contexts/SurveyContext';
 
 const Stack = createStackNavigator();
-
 const Raiz = () => {
   return (
     <AuthProvider>
@@ -69,12 +68,16 @@ const Raiz = () => {
             <Stack.Screen
               name="Carnaval"
               component={AcoesPesquisa}
-              options={{headerShown: true}}
+              options={{
+                headerShown: true,
+              }}
             />
             <Stack.Screen
               name="AcoesPesquisa"
               component={AcoesPesquisa}
-              options={{headerShown: true}}
+              options={{
+                headerShown: true,
+              }}
             />
             <Stack.Screen
               name="Coleta"

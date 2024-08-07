@@ -30,7 +30,7 @@ const Home = props => {
 
   const handleCardPress = surveyObj => {
     setSelectedSurvey(surveyObj);
-    handleNavigate('Carnaval');
+    props.navigation.navigate('Carnaval', {name: 'batata'});
   };
 
   useEffect(() => {
