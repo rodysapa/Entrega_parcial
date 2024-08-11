@@ -5,6 +5,7 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import app from '../firebase/config';
 import { useSurvey } from '../Contexts/SurveyContext';
+import Legend from '../components/Legend';
 
 const db = getFirestore(app);
 
@@ -43,7 +44,7 @@ const Relatorio = () => {
 
                     if (ratings) {
                         const data = [
-                            { key: 'terrible', value: ratings.terrible, svg: { fill: '#53D8D8' }, arc: { outerRadius: '130%', cornerRadius: 10, } },
+                            { key: 'terrible', value: ratings.terrible, svg: { fill: '#53D8D8' }, arc: { outerRadius: '115%', cornerRadius: 10, } },
                             { key: 'bad', value: ratings.bad, svg: { fill: '#EA7288' } },
                             { key: 'neutral', value: ratings.neutral, svg: { fill: '#5FCDA4' } },
                             { key: 'good', value: ratings.good, svg: { fill: '#6994FE' } },
@@ -76,7 +77,7 @@ const Relatorio = () => {
 
     if (loading) {
         return (
-            <View style={styles.loadingContainer}>
+            <View style={estilos.loadingContainer}>
                 <ActivityIndicator size="large" color="#ffffff" />
             </View>
         );
@@ -84,37 +85,45 @@ const Relatorio = () => {
 
     if (error) {
         return (
-            <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>{error}</Text>
+            <View style={estilos.errorContainer}>
+                <Text style={estilos.errorText}>{error}</Text>
             </View>
         );
     }
 
     if (data.length === 0) {
         return (
-            <View style={styles.errorContainer}>
-                <Text style={styles.errorText}>Nenhum dado disponível para exibição.</Text>
+            <View style={estilos.errorContainer}>
+                <Text style={estilos.errorText}>Nenhum dado disponível para exibição.</Text>
             </View>
         );
     }
 
     return (
-        <View>
+        
+        <View style={estilos.container}>
             <PieChart 
-                style={{ height: 300, backgroundColor: '#372775'}}
-                outerRadius={'70%'}
+                style={{height: 325, width: 500}}
+                outerRadius={'68%'}
                 innerRadius={10}
                 data={data}
             />
+            <View style={estilos.secondContainer}>
+                <Legend squareColor={'#F1CE7E'} txtLegend={"Excelente"}/>
+                <Legend squareColor={'#6994FE'} txtLegend={"Bom"}/>
+                <Legend squareColor={'#5FCDA4'} txtLegend={"Neutro"}/>
+                <Legend squareColor={'#EA7288'} txtLegend={"Ruim"}/>
+                <Legend squareColor={'#53D8D8'} txtLegend={"Péssimo"}/>
+            </View>
         </View>
     );
 };
 
-const styles = StyleSheet.create({
+const estilos = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#372775',
-        justifyContent: 'center',
+        flexDirection: 'row',
         alignItems: 'center',
     },
     loadingContainer: {
@@ -131,7 +140,23 @@ const styles = StyleSheet.create({
     },
     errorText: {
         color: 'white',
-        fontSize: 18,
+        fontFamily: 'AveriaLibre-Regular',
+        fontSize: 25,
+    },
+    secondContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        gap: 10,
+    },
+    legend:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    square: {
+        width: 25,
+        height: 25,
+        backgroundColor: '#F1CE7E',
     },
 });
 
