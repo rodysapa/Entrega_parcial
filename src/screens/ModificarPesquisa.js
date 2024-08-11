@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -15,11 +15,32 @@ import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
 import PopUp from '../components/PopUp.js';
 import {useSurvey} from '../Contexts/SurveyContext.js';
+import {useAuth} from '../Contexts/AuthContext.js';
 
-const ModificarPesquisa = () => {
+import {deleteSurvey, updateSurvey} from '../firebase/surveyService.js';
+
+import {useRoute, useNavigation} from '@react-navigation/native';
+
+const ModificarPesquisa = props => {
+  const [name, setName] = useState('');
+  const [data, setData] = useState('');
+  const [image, setImagem] = useState();
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const {selectedSurvey} = useSurvey();
+
+  const route = useRoute();
+  const navigation = useNavigation();
+  const {title} = route.params || {}; // Acessar o parâmetro passado
+
+  const user = useAuth().user;
+  useEffect(() => {
+    //Carrega dados iniciais
+    setName(selectedSurvey?.name);
+    setData(selectedSurvey?.date);
+    setImagem(selectedSurvey?.imageUrl);
+  }, []);
 
   const openModal = () => {
     setModalVisible(true);
@@ -28,24 +49,37 @@ const ModificarPesquisa = () => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
+  const deletarPesquisa = () => {
+    deleteSurvey(user.uid, selectedSurvey.id);
+    props.navigation.pop(2);
+  };
   //=============================================
 
   const SalvarModificacao = () => {
-    console.log('BOTAO SALVAR MODIFICACAO');
+    updateSurvey(user.uid, selectedSurvey.id, name, data, image);
   };
-  console.log(selectedSurvey);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: title || 'Modificar Pesquisa', // Define um título padrão caso o parâmetro não seja fornecido
+    });
+  }, [navigation, title]);
+  console.log(title);
   return (
     <View style={styles.container}>
       <View style={styles.cInput}>
         <LabeledTextInput
           style={styles.label}
-          label={selectedSurvey?.name}
-          placeHolder={selectedSurvey?.name}
+          label={name}
+          placeHolder={name}
+          setLabel={setName}
         />
         <LabeledTextInput_Icon
           style={styles.label}
-          label={selectedSurvey?.data}
-          placeHolder={selectedSurvey?.data}
+          label={'Data'}
+          placeHolder={data}
+          setLabel={setData}
           inputType="DATA"
         />
 
@@ -53,7 +87,7 @@ const ModificarPesquisa = () => {
         <Image
           style={{width: 250, height: 75, marginBottom: 30}}
           label="Imagem"
-          source={{uri: selectedSurvey?.imageUrl}}
+          source={{uri: image}}
         />
 
         <Button_Green txtEntrar="Salvar" onPress={SalvarModificacao} />
@@ -64,7 +98,11 @@ const ModificarPesquisa = () => {
         <Icon name="trash" size={35} color="#FFFFFF" />
         <Text style={styles.botao}>Apagar</Text>
       </TouchableOpacity>
-      <PopUp modalVisible={modalVisible} closeModal={closeModal} />
+      <PopUp
+        modalVisible={modalVisible}
+        closeModal={closeModal}
+        modalAction={deletarPesquisa}
+      />
     </View>
   );
 };

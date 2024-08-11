@@ -72,34 +72,27 @@ export async function getSurveys(userId) {
 }
 
 // Função para atualizar uma pesquisa
-export async function updateSurvey(userId, surveyId, {name, date, imageFile}) {
+export async function updateSurvey(userId, surveyId, name, date, image) {
   try {
     const surveyRef = doc(db, 'users', userId, 'surveys', surveyId);
 
-    // Obter os dados atuais da pesquisa
-    const surveyDoc = await surveyRef.get();
-    if (!surveyDoc.exists) {
-      throw new Error('Pesquisa não encontrada');
-    }
-
-    const currentData = surveyDoc.data();
-
-    let imageUrl = currentData.imageUrl;
-    if (imageFile) {
+    let imageUrl = image;
+    if (typeof image != 'string') {
       // Armazenar a nova imagem no Firebase Storage
+
       const imageRef = ref(
         storage,
-        `surveys/${userId}/${name || currentData.name}/${imageFile.name}`,
+        `surveys/${userId}/${name || currentData.name}/${image.name}`,
       );
-      await uploadBytes(imageRef, imageFile);
+      await uploadBytes(imageRef, image);
       imageUrl = await getDownloadURL(imageRef);
     }
 
     // Atualizar a pesquisa no Firestore
     await updateDoc(surveyRef, {
-      name: name || currentData.name,
-      date: date || currentData.date,
-      imageUrl,
+      name: name,
+      date: date,
+      imageUrl: imageUrl,
     });
 
     console.log('Pesquisa atualizada com ID:', surveyId);
@@ -132,11 +125,12 @@ export async function addRating(userId, surveyId, ratingType) {
     const surveyRef = doc(db, 'users', userId, 'surveys', surveyId);
     await updateDoc(surveyRef, {
       [`ratings.${ratingType}`]: increment(1),
-      
     });
 
     console.log('dados pesquisa', surveyId);
-    console.log(`Nota ${ratingType} atualizada com sucesso na pesquisa com ID: ${surveyId}`);
+    console.log(
+      `Nota ${ratingType} atualizada com sucesso na pesquisa com ID: ${surveyId}`,
+    );
   } catch (error) {
     console.error('Erro ao atualizar nota:', error);
   }

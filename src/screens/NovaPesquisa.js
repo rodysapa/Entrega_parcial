@@ -28,7 +28,6 @@ const NovaPesquisa = () => {
   const user = useAuth().user;
 
   const createSurveyButtonPressed = async () => {
-    console.log('Jorge');
     /*if (!image) {
       console.log('Definiar imagem para criar pesquisa');
       return;
@@ -42,7 +41,7 @@ const NovaPesquisa = () => {
       console.log("Não foi possível abrir imagem devido a um erro: ", error)
       return
     } */
-    console.log(user);
+
     createSurvey(user.uid, name, date, image);
   };
 
