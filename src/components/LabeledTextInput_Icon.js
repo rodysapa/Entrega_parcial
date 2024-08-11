@@ -11,6 +11,7 @@ const LabelTextInput_Icon = ({label, inputValue, onChangeText}) => {
           style={styles.input}
           value={inputValue}
           onChangeText={onChangeText}
+          inputMode="DATA"
         />
         <Icon name="calendar" size={20} color="gray" />
       </View>

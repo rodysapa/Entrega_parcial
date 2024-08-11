@@ -10,10 +10,22 @@ import HeaderNavigation from '../components/HeaderNavigation';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import ActionButton from '../components/ActionButton';
 import {useSurvey} from '../Contexts/SurveyContext';
+import {useRoute, useNavigation} from '@react-navigation/native';
+import {useLayoutEffect} from 'react';
 
 const AcoesPesquisa = props => {
   const {selectedSurvey} = useSurvey();
-  console.log('aqui', selectedSurvey);
+
+  const route = useRoute();
+  const navigation = useNavigation();
+  const {title} = route.params || {}; // Acessar o parâmetro passado
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: title || 'Modificar Pesquisa', // Define um título padrão caso o parâmetro não seja fornecido
+    });
+  }, [navigation, title]);
+
   return (
     <>
       <View style={styles.container}>
