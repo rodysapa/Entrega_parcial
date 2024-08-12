@@ -24,7 +24,9 @@ import {useRoute, useNavigation} from '@react-navigation/native';
 const ModificarPesquisa = props => {
   const [name, setName] = useState('');
   const [data, setData] = useState('');
+
   const [image, setImagem] = useState(null);
+
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -36,6 +38,7 @@ const ModificarPesquisa = props => {
 
   const user = useAuth().user;
 
+
   useEffect(() => {
     // Carrega dados iniciais
     if (selectedSurvey) {
@@ -44,6 +47,7 @@ const ModificarPesquisa = props => {
       setImagem(selectedSurvey.imageUrl || null);
     }
   }, [selectedSurvey]);
+
 
   const openModal = () => {
     setModalVisible(true);
@@ -57,6 +61,9 @@ const ModificarPesquisa = props => {
     deleteSurvey(user.uid, selectedSurvey.id);
     props.navigation.pop(2);
   };
+
+  //=============================================
+
 
   const SalvarModificacao = () => {
     updateSurvey(user.uid, selectedSurvey.id, name, data, image);
@@ -73,11 +80,14 @@ const ModificarPesquisa = props => {
       <View style={styles.cInput}>
         <LabeledTextInput
           style={styles.label}
+
           txtlabel={'Nome'}
+
           label={name}
           placeHolder={name}
           setLabel={setName}
         />
+
         <LabelTextInput_Icon
           label="Data"
           inputValue={data}
@@ -93,6 +103,7 @@ const ModificarPesquisa = props => {
         ) : (
           <Text style={styles.label}>Nenhuma imagem disponível</Text>
         )}
+
 
         <Button_Green txtEntrar="Salvar" onPress={SalvarModificacao} />
       </View>
