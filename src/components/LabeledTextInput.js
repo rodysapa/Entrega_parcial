@@ -26,9 +26,12 @@ const estilos = StyleSheet.create({
     backgroundColor: 'white',
     color: 'black',
     height: 24,
+    fontSize: 14,
+    padding: 0,
+    paddingHorizontal: 8,
   },
   viewInput: {
-    paddingTop: '2%',
+    paddingTop: 0,
   },
 });
 

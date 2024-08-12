@@ -30,12 +30,13 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'AveriaLibre-Regular',
     color: '#3F92C5',
     backgroundColor: '#FFFFFF',
     paddingLeft: 5,
     height: 32,
+    padding: 0,
   },
   iconStyle: {
     color: '#aaaaaa',

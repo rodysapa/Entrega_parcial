@@ -72,20 +72,30 @@ export async function getSurveys(userId) {
 }
 
 // Função para atualizar uma pesquisa
-export async function updateSurvey(userId, surveyId, name, date, image) {
+export async function updateSurvey(userId, surveyId, name, date, newImage) {
   try {
     const surveyRef = doc(db, 'users', userId, 'surveys', surveyId);
 
-    let imageUrl = image;
-    if (typeof image != 'string') {
-      // Armazenar a nova imagem no Firebase Storage
+    const surveyDoc = await getDoc(surveyRef);
+    const currentData = surveyDoc.data();
+    let imageUrl = currentData.imageUrl;
 
-      const imageRef = ref(
+    // Armazenar a nova imagem no Firebase Storage
+
+    if (newImage) {
+      // Excluindo a imagem antiga, se existir
+      if (imageUrl) {
+        const oldImageRef = ref(storage, imageUrl.split('/').pop());
+        await deleteObject(oldImageRef);
+      }
+
+      // Armazenar a nova imagem no Firebase Storage
+      const newImageRef = ref(
         storage,
-        `surveys/${userId}/${name || currentData.name}/${image.name}`,
+        `surveys/${userId}/${name}/${newImage.name}`,
       );
-      await uploadBytes(imageRef, image);
-      imageUrl = await getDownloadURL(imageRef);
+      await uploadBytes(newImageRef, newImage);
+      imageUrl = await getDownloadURL(newImageRef);
     }
 
     // Atualizar a pesquisa no Firestore

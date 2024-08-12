@@ -1,10 +1,10 @@
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from 'react';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { addRating } from '../firebase/surveyService'; // Importe a função de adicionar nota
-import { useNavigation } from '@react-navigation/native';
-import { getAuth } from 'firebase/auth';
-import { useSurvey } from '../Contexts/SurveyContext';
+import {addRating} from '../firebase/surveyService'; // Importe a função de adicionar nota
+import {useNavigation} from '@react-navigation/native';
+import {getAuth} from 'firebase/auth';
+import {useSurvey} from '../Contexts/SurveyContext';
 
 const FeedbackButton = props => {
   return (
@@ -18,7 +18,7 @@ const FeedbackButton = props => {
 const Coleta = props => {
   const [feedbackLevel, setFeedbackLevel] = useState(0);
   const navigation = useNavigation();
-  const { selectedSurvey } = useSurvey();
+  const {selectedSurvey} = useSurvey();
 
   const [userId, setUserId] = useState(null);
 
@@ -37,18 +37,18 @@ const Coleta = props => {
   const surveyId = selectedSurvey?.id; // Supondo que selectedSurvey é um objeto que contém um campo 'id'
   console.log('dados pesquisa', selectedSurvey);
 
-  const collectFeedback = async (level) => {
+  const collectFeedback = async level => {
     if (!userId || !surveyId) {
       console.error('Usuário ou ID da pesquisa não definidos');
       return;
     }
-    
+
     setFeedbackLevel(level);
-    
+
     // Mapeia o nível de feedback para o tipo de nota
     const ratingTypes = ['terrible', 'bad', 'neutral', 'good', 'excellent'];
     const ratingType = ratingTypes[level];
-    
+
     try {
       // Chame a função para adicionar a nota ao banco de dados
       await addRating(userId, surveyId, ratingType);
@@ -69,7 +69,9 @@ const Coleta = props => {
         style={styles.invisibleButton}
         onPress={gotoBackstage}></TouchableOpacity>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>O que você achou do Carnaval 2024?</Text>
+        <Text style={styles.text}>
+          {`O que você achou do ${selectedSurvey.name}`}
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <FeedbackButton

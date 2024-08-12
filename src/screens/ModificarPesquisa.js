@@ -20,13 +20,13 @@ import {useAuth} from '../Contexts/AuthContext.js';
 import {deleteSurvey, updateSurvey} from '../firebase/surveyService.js';
 
 import {useRoute, useNavigation} from '@react-navigation/native';
+import ImageInput from '../components/ImageInput.js';
 
 const ModificarPesquisa = props => {
   const [name, setName] = useState('');
   const [data, setData] = useState('');
 
   const [image, setImagem] = useState(null);
-
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -38,7 +38,6 @@ const ModificarPesquisa = props => {
 
   const user = useAuth().user;
 
-
   useEffect(() => {
     // Carrega dados iniciais
     if (selectedSurvey) {
@@ -47,7 +46,6 @@ const ModificarPesquisa = props => {
       setImagem(selectedSurvey.imageUrl || null);
     }
   }, [selectedSurvey]);
-
 
   const openModal = () => {
     setModalVisible(true);
@@ -64,9 +62,20 @@ const ModificarPesquisa = props => {
 
   //=============================================
 
-
-  const SalvarModificacao = () => {
-    updateSurvey(user.uid, selectedSurvey.id, name, data, image);
+  const SalvarModificacao = async () => {
+    try {
+      // Se uma nova imagem foi selecionada
+      if (image instanceof Object) {
+        await updateSurvey(user.uid, selectedSurvey.id, name, data, image);
+      } else {
+        // Se nenhuma nova imagem foi selecionada, apenas atualize os dados
+        await updateSurvey(user.uid, selectedSurvey.id, name, data, null);
+      }
+      // Navegar de volta após a atualização
+      navigation.goBack();
+    } catch (error) {
+      console.error('Erro ao salvar modificações:', error);
+    }
   };
 
   useLayoutEffect(() => {
@@ -80,9 +89,7 @@ const ModificarPesquisa = props => {
       <View style={styles.cInput}>
         <LabeledTextInput
           style={styles.label}
-
           txtlabel={'Nome'}
-
           label={name}
           placeHolder={name}
           setLabel={setName}
@@ -94,16 +101,11 @@ const ModificarPesquisa = props => {
           onChangeText={setData}
         />
 
-        <Text style={styles.label}>Imagem</Text>
         {image ? (
-          <Image
-            style={{width: 250, height: 75, marginBottom: 30}}
-            source={{uri: image}}
-          />
+          <ImageInput setImageCallback={setImagem} initialValue={image} />
         ) : (
           <Text style={styles.label}>Nenhuma imagem disponível</Text>
         )}
-
 
         <Button_Green txtEntrar="Salvar" onPress={SalvarModificacao} />
       </View>

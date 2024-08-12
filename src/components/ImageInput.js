@@ -1,27 +1,27 @@
-import { useState } from 'react'
+import {useState} from 'react';
 import {StyleSheet, Text, View, Image, Touchable} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-import { launchImageLibrary } from 'react-native-image-picker'
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const ImageInput = props => {
-  const setImage = props.setImageCallback
+  const setImage = props.setImageCallback;
 
-  const [imageURI, setImagePath] = useState('')
+  const [imageURI, setImagePath] = useState(props.initialValue);
 
   const selectFile = async () => {
-    let result 
+    let result;
     try {
-      result = await launchImageLibrary({mediaType: 'photo'})
+      result = await launchImageLibrary({mediaType: 'photo'});
     } catch (error) {
-      console.log('Erro ao selecionar imagem da galeria: ', error)
-      return
+      console.log('Erro ao selecionar imagem da galeria: ', error);
+      return;
     }
-    if (result.didCancel) return
-    console.log(result.assets)
-    setImagePath(result.assets[0].uri)
-    setImage(result.assets[0])
-  }
+    if (result.didCancel) return;
+    console.log(result.assets);
+    setImagePath(result.assets[0].uri);
+    setImage(result.assets[0]);
+  };
 
   return (
     <View style={styles.container}>
@@ -30,7 +30,7 @@ const ImageInput = props => {
       </View>
       <TouchableOpacity onPress={selectFile}>
         <View style={styles.cImageInput}>
-          { imageURI ? (
+          {imageURI ? (
             <>
               <Image
                 style={styles.image}

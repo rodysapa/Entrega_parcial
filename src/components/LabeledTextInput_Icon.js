@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   input: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'AveriaLibre-Regular',
     color: '#3F92C5',
     flex: 0.99,
+    padding: 0,
+    color: 'black',
   },
   txtInputContainer: {
     marginTop: 10,

@@ -7,7 +7,11 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import {useAuth} from '../Contexts/AuthContext';
+
 const CustomDrawer = props => {
+  const auth = useAuth();
+
   return (
     <DrawerContentScrollView {...props}>
       <View>
@@ -23,6 +27,7 @@ const CustomDrawer = props => {
         )}
         label="Sair"
         onPress={() => {
+          auth.logout();
           props.navigation.popToTop();
         }}
       />
