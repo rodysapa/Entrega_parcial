@@ -1,5 +1,6 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
 import SearchBar from '../components/SearchBar.js';
 import CardPesquisa from '../components/CardPesquisa.js';
@@ -30,21 +31,23 @@ const Home = props => {
 
   const handleCardPress = surveyObj => {
     setSelectedSurvey(surveyObj);
-    props.navigation.navigate('Carnaval', {name: 'batata'});
+    props.navigation.navigate('Carnaval', {title: surveyObj.name});
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        surveys = await getSurveys(user.uid);
-        setUserServeys(surveys);
-        console.log('a ', surveys);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+    try {
+      surveys = await getSurveys(user.uid);
+      setUserServeys(surveys);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, []),
+  );
   // console.log(user);
   return (
     <View style={styles.container}>
@@ -59,6 +62,7 @@ const Home = props => {
           {userServeys?.map(
             survey => (
               <CardPesquisa
+                key={survey.id}
                 title={survey.name}
                 img={survey.imageUrl}
                 date={survey.date}

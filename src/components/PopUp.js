@@ -2,9 +2,9 @@ import {View, Text, StyleSheet, Modal} from 'react-native';
 import ModalButton from './ModalButton';
 // import Button from '../components/Button.js';
 
-const PopUp = ({modalVisible, closeModal}) => {
+const PopUp = ({modalVisible, closeModal, modalAction}) => {
   const deleteResearch = () => {
-    console.log('PESQUISA APAGADA!');
+    modalAction();
     closeModal();
   };
 
@@ -23,8 +23,18 @@ const PopUp = ({modalVisible, closeModal}) => {
               Tem certeza de apagar essa pesquisa?
             </Text>
             <View style={styles.container}>
-              <ModalButton text="SIM" textColor="white" backgroundColor="#FF8383" onPress={deleteResearch}/>
-              <ModalButton text="NÃO" textColor="white" backgroundColor="#3f92c5" onPress={closeModal}/>
+              <ModalButton
+                text="SIM"
+                textColor="white"
+                backgroundColor="#FF8383"
+                onPress={deleteResearch}
+              />
+              <ModalButton
+                text="NÃO"
+                textColor="white"
+                backgroundColor="#3f92c5"
+                onPress={closeModal}
+              />
             </View>
           </View>
         </View>

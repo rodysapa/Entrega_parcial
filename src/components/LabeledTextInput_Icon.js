@@ -1,5 +1,4 @@
 import {View, StyleSheet, Text, TextInput, Alert} from 'react-native';
-import LabeledTextInput from './LabeledTextInput';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const LabelTextInput_Icon = ({label, inputValue, onChangeText}) => {
@@ -11,6 +10,7 @@ const LabelTextInput_Icon = ({label, inputValue, onChangeText}) => {
           style={styles.input}
           value={inputValue}
           onChangeText={onChangeText}
+          inputMode="DATA"
         />
         <Icon name="calendar" size={20} color="gray" />
       </View>
