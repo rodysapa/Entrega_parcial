@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 import LabeledTextInput from '../components/LabeledTextInput.js';
-import LabeledTextInput_Icon from '../components/LabeledTextInput_Icon.js';
+import LabelTextInput_Icon from '../components/LabeledTextInput_Icon.js';
 import Button_Green from '../components/Button_Green.js';
 import PopUp from '../components/PopUp.js';
 import {useSurvey} from '../Contexts/SurveyContext.js';
@@ -24,7 +24,9 @@ import {useRoute, useNavigation} from '@react-navigation/native';
 const ModificarPesquisa = props => {
   const [name, setName] = useState('');
   const [data, setData] = useState('');
-  const [image, setImagem] = useState();
+
+  const [image, setImagem] = useState(null);
+
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -35,12 +37,17 @@ const ModificarPesquisa = props => {
   const {title} = route.params || {}; // Acessar o parâmetro passado
 
   const user = useAuth().user;
+
+
   useEffect(() => {
-    //Carrega dados iniciais
-    setName(selectedSurvey?.name);
-    setData(selectedSurvey?.date);
-    setImagem(selectedSurvey?.imageUrl);
-  }, []);
+    // Carrega dados iniciais
+    if (selectedSurvey) {
+      setName(selectedSurvey.name || '');
+      setData(selectedSurvey.date || '');
+      setImagem(selectedSurvey.imageUrl || null);
+    }
+  }, [selectedSurvey]);
+
 
   const openModal = () => {
     setModalVisible(true);
@@ -54,7 +61,9 @@ const ModificarPesquisa = props => {
     deleteSurvey(user.uid, selectedSurvey.id);
     props.navigation.pop(2);
   };
+
   //=============================================
+
 
   const SalvarModificacao = () => {
     updateSurvey(user.uid, selectedSurvey.id, name, data, image);
@@ -65,30 +74,36 @@ const ModificarPesquisa = props => {
       title: title || 'Modificar Pesquisa', // Define um título padrão caso o parâmetro não seja fornecido
     });
   }, [navigation, title]);
-  console.log(title);
+
   return (
     <View style={styles.container}>
       <View style={styles.cInput}>
         <LabeledTextInput
           style={styles.label}
+
+          txtlabel={'Nome'}
+
           label={name}
           placeHolder={name}
           setLabel={setName}
         />
-        <LabeledTextInput_Icon
-          style={styles.label}
-          label={'Data'}
-          placeHolder={data}
-          setLabel={setData}
-          inputType="DATA"
+
+        <LabelTextInput_Icon
+          label="Data"
+          inputValue={data}
+          onChangeText={setData}
         />
 
         <Text style={styles.label}>Imagem</Text>
-        <Image
-          style={{width: 250, height: 75, marginBottom: 30}}
-          label="Imagem"
-          source={{uri: image}}
-        />
+        {image ? (
+          <Image
+            style={{width: 250, height: 75, marginBottom: 30}}
+            source={{uri: image}}
+          />
+        ) : (
+          <Text style={styles.label}>Nenhuma imagem disponível</Text>
+        )}
+
 
         <Button_Green txtEntrar="Salvar" onPress={SalvarModificacao} />
       </View>
@@ -107,7 +122,7 @@ const ModificarPesquisa = props => {
   );
 };
 
-//Estilo do codigo
+// Estilo do código
 const styles = StyleSheet.create({
   container: {
     flex: 1,

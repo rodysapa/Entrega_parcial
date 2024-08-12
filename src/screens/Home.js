@@ -62,6 +62,7 @@ const Home = props => {
           {userServeys?.map(
             survey => (
               <CardPesquisa
+                key={survey.id}
                 title={survey.name}
                 img={survey.imageUrl}
                 date={survey.date}

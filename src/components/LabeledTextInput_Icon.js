@@ -1,5 +1,4 @@
 import {View, StyleSheet, Text, TextInput, Alert} from 'react-native';
-import LabeledTextInput from './LabeledTextInput';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const LabelTextInput_Icon = ({label, inputValue, onChangeText}) => {
